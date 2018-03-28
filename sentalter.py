@@ -30,6 +30,13 @@ class AlterSent:
         altfst = fst.Acceptor(syms=self.lmfst.isyms)
         
         for idx, (word, tag) in enumerate(pos):
+            # add the word to the lattice
+            if word in altfst.isyms:
+                altfst.add_arc(idx, idx+1, word, 0)
+            else:
+                altfst.add_arc(idx, idx+1, "<unk>", 0)
+
+            # add word alternatives to the lattice
             if ( tag.startswith('NN') or \
                  tag.startswith('JJ') or tag.startswith('RB') or \
                  tag.startswith('VB') ) and \
@@ -38,34 +45,44 @@ class AlterSent:
                              '!', '-', '--', 'of'] and \
                 not word.startswith("'"):
                 nearlist = self.vecs.near(word, 5)
+
+                # check if there are any neighbors at all
+                if nearlist == None:
+                    continue
+
+                # add each neighbor to the lattice
                 for widx, (dist, w) in enumerate(nearlist):
-                    if dist > 0.1: # and w != word:
-                        altfst.add_arc(idx, idx+1, w, math.log(dist) * -1)
-            else:
-                altfst.add_arc(idx, idx+1, word, 0)
+                    if dist > 0.1 and w in altfst.isyms and w != word:
+                        altfst.add_arc(idx, idx+1, w, (math.log(dist) * -1)/1000)
+
+        # mark the final state in the FST
         altfst[len(words)].final = True
+
+        # rescore the lattice using the language model
         scoredfst = self.lmfst.compose(altfst)
+
+        # get best paths in the rescored lattice
         bestpaths = scoredfst.shortest_path(numalts)
         bestpaths.remove_epsilon()
 
         altstrings = {}
 
+        # get the strings and weights from the best paths
         for i, path in enumerate(bestpaths.paths()):
             path_string = ' '.join(bestpaths.isyms.find(arc.ilabel) for arc in path)
             path_weight = functools.reduce(operator.mul, (arc.weight for arc in path))
             if not path_string in altstrings:
                 altstrings[path_string] = path_weight
-            #elif altstrings[path_string] < path_weight:
-            #    altstrings[path_string] = path_weight
 
-            if len(altstrings) == numalts:
-                break
-
+        # sort strings by weight
         scoredstrings = []
         for str in altstrings:
             score = float(("%s" % altstrings[str]).split('(')[1].strip(')'))
             scoredstrings.append((score, str))
         scoredstrings.sort()
+        
+        if len(scoredstrings) > numalts:
+            scoredstrings = scoredstring[:numalts]
         
         return scoredstrings
 
@@ -99,7 +116,7 @@ def main(argv):
         lines = lv.fst_alter_sent(words,100)
 
         for i, (score, str) in enumerate(lines):
-            print(i, ':', score, ':', str)
+            print(i, ':', '%.3f' % score, ':', str)
 
         print()
 
