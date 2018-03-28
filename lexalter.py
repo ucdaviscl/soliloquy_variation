@@ -4,8 +4,9 @@ import sys
 import tokenizer
 import wordvecutil
 import math
+import getopt
 
-# lexvec contains at most maxtypes word vectors.
+# AlterLex contains at most maxtypes word vectors.
 # the word vector file is assumed to be in word2vec format,
 # with vectors appearing from most to least frequent
 # (which is standard in word2vec and fasttext)
@@ -13,7 +14,7 @@ import math
 # fname: the name of the word vector file in text format
 # maxtypes: maximum number of vectors to load
 
-class lexvec:
+class AlterLex:
     def __init__(self, fname, maxtypes=0):
         self.vecs = wordvecutil.word_vectors(fname, maxtypes)
         self.maxtypes = maxtypes
@@ -62,7 +63,25 @@ class lexvec:
 # a sample driver
 
 def main(argv):
-    lv = lexvec(sys.argv[1], 50000)
+    fname = ''
+
+    try:
+        opts, args = getopt.getopt(argv, "hv:")
+    except getopt.GetoptError:
+        print("lexalter.py -v <word_vectors_txt>")
+        sys.exit(1)
+    for opt, arg in opts:
+        if opt == '-h':
+            print("lexalter.py -v <word_vectors_txt>")
+            sys.exit()
+        elif opt == '-v':
+            fname = arg
+
+    if fname == '':
+        print("lexalter.py -v <word_vectors_txt>")
+        sys.exit(1)
+
+    lv = AlterLex(fname, 50000)
 
     # get a main word and some context words from stdin
     for line in sys.stdin:

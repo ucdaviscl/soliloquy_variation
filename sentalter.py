@@ -7,19 +7,20 @@ import fst
 import math
 import functools
 import operator
+import getopt
 
 # we can optionally use nltk to tag the text
 # and focus on replacement of specific categories
 #
 # import nltk
 
-class lexvec:
+class AlterSent:
     def __init__(self, vecfname, lmfname, maxtypes=0):
         self.vecs = wordvecutil.word_vectors(vecfname, maxtypes)
         self.lmfst = fst.read_std(lmfname)
         self.maxtypes = maxtypes
 
-    def fst_sent_alter(self, words, numalts=5):
+    def fst_alter_sent(self, words, numalts=5):
         # with NLTK we could do POS tagging here
         # pos = nltk.pos_tag(text)
 
@@ -69,12 +70,33 @@ class lexvec:
         return scoredstrings
 
 def main(argv):
-    lv = lexvec(sys.argv[1], sys.argv[2], 50000)
+    fstfname = ''
+    fname = ''
+
+    try:
+        opts, args = getopt.getopt(argv, "hv:f:")
+    except getopt.GetoptError:
+        print("lexalter.py -v <word_vectors_txt> -f <language_model_fst>")
+        sys.exit(1)
+    for opt, arg in opts:
+        if opt == '-h':
+            print("lexalter.py -v <word_vectors_txt> -f <language_model_fst>")
+            sys.exit()
+        elif opt == '-v':
+            fname = arg
+        elif opt == '-f':
+            fstfname = arg
+
+    if fname == '' or fstfname == '':
+        print("lexalter.py -v <word_vectors_txt> -f <language_model_fst>")
+        sys.exit(1)
+
+    lv = AlterSent(fname, fstfname, 50000)
     print("Ready")
     for line in sys.stdin:
         print()
         words = tokenizer.word_tokenize(line)
-        lines = lv.fst_sent_alter(words,100)
+        lines = lv.fst_alter_sent(words,100)
 
         for i, (score, str) in enumerate(lines):
             print(i, ':', score, ':', str)
