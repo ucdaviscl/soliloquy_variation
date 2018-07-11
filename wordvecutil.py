@@ -1,9 +1,11 @@
 # wordvecutil: Basic operations for word vectors
-#  - loading, cosine similarity, nearest neighbors
+#  - loading, cosine similarity, nearest neighbors, display embeddings
 
 import numpy
 import sys
-import getopt
+import os
+import argparse
+
 
 class word_vectors:
 
@@ -70,13 +72,14 @@ class word_vectors:
         dist = self.v.dot(self.v[self.word2idx[word]])
 
         # sort by distance
-        near = sorted([(dist[i], self.idx2word[i]) for i in range(len(dist))], reverse=True)
+        nearest = sorted([(dist[i], self.idx2word[i]) for i in range(len(dist))], reverse=True)
 
         # trim results and return
-        if numnear > len(near):
-            numnear = len(near)
+        if numnear > len(nearest):
+            numnear = len(nearest)
             
-        return near[0:numnear]
+        return nearest[:numnear]
+
 
     # sim returns the cosine similarity between two words.
     # because our vectors are normalized, we can just
@@ -89,36 +92,77 @@ class word_vectors:
             return None
         return self.v[self.word2idx[w1]].dot(self.v[self.word2idx[w2]])
 
+    # return embeddings for word w
+    # third argument is a placeholder for compatibility
+    # consider change functions to take *args
+
+    def getword(self, w, _):
+        if not w in self.word2idx:
+            print(f'Word {w} not found')
+            return
+        else:
+            return w + ' ' + ' '.join([str(x) for x in self.v[self.word2idx[w]]])
+
+
 # a sample driver
 
-def main(argv):
-    fname = ''
-    try:
-        opts, args = getopt.getopt(argv, "hv:")
-    except getopt.GetoptError:
-        print("word_vectors.py -v <word_vectors_txt>")
-        sys.exit(1)
-    for opt, arg in opts:
-        if opt == '-h':
-            print("word_vectors.py -v <word_vectors_txt>")
-            sys.exit()
-        elif opt == '-v':
-            fname = arg
-
-    if fname == '':
-        print("word_vectors.py -v <word_vectors_txt>")
-        sys.exit()
+def main():
+    parser = argparse.ArgumentParser(description='word vector utilities')
+    parser.add_argument('--mode', choices = ['nearest', 'query'], default = 'nearest')
+    parser.add_argument('-v' ,'--vec_file', type=str, default = '', help='word vector text')
+    parser.add_argument('-f', '--input', type = str, default = '', help = 'list of queries in a file, one word in each line')
+    parser.add_argument('-d', '--distance', type = int, default = 10)
+    parser.add_argument('-o', '--output', type = str, default = '', help = 'output of results')
+    parser.add_argument('-m', '--max', type = int, default = 0, help = 'max number of vectors to be read')
+    parser.add_argument('-i', '--interactive', action = 'store_true', help = 'enable interactive mode')
+    parser.add_argument('cmd_queries', nargs = '*', default = [], help = 'words to query')
+    params = parser.parse_args()
+    
+    if not os.path.isfile(params.vec_file):
+        print('Vector file \"{}\" not found\nUse -h for help'.format(params.vec_file))
+        exit(1)
 
     print("Loading...")
 
     # create the vectors from a file in text format,
-    # and load at most 100000 vectors
-    v = word_vectors(fname, 100000)
+    v = word_vectors(params.vec_file, params.max)
     print("Done.")
 
-    # find the 10 nearest neighbors for "computer"
-    print(v.nearest('computer', 10))
+    # select function based on mode
+    if params.mode == 'nearest':
+        qf = v.near
+    else:
+        qf = v.getword
 
+    # select output function
+    if len(params.output) > 0:
+        f = open(params.output, 'w')
+        myprint = lambda x: f.write(str(x)+'\n')
+    else:
+        f = None
+        myprint = print
+
+
+    for w in params.cmd_queries:
+        myprint(qf(w, params.distance))
+    
+    if os.path.isfile(params.input):
+        with open(params.input) as qin:
+            for line in qin:
+                myprint(qf(line.rstrip('\n '), params.distance))
+
+
+    # if interactive mode is enabled, read input  line by line until EOF
+    if params.interactive:
+        try:
+            while True:
+                w = input()
+                myprint(qf(w.rstrip('\n'), params.distance))
+        except EOFError:
+            pass
+
+    if f:
+        f.close()
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
 
