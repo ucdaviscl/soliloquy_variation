@@ -20,6 +20,9 @@ class AlterSent:
         self.lmfst = fst.read_std(lmfname)
         self.maxtypes = maxtypes
 
+    def sent_rescore(self, sents):
+
+
     def fst_alter_sent(self, words, numalts=5):
         # with NLTK we could do POS tagging here
         # pos = nltk.pos_tag(text)
@@ -74,16 +77,21 @@ class AlterSent:
             if not path_string in altstrings:
                 altstrings[path_string] = path_weight
 
+        # print('Altstrings:')
+        # print(altstrings)
+
         # sort strings by weight
         scoredstrings = []
-        for str in altstrings:
-            score = float(("%s" % altstrings[str]).split('(')[1].strip(')'))
-            scoredstrings.append((score, str))
+        for sent in altstrings:
+            score = float(("%s" % altstrings[sent]).split('(')[1].strip(')'))
+            scoredstrings.append((score, sent))
         scoredstrings.sort()
         
         if len(scoredstrings) > numalts:
             scoredstrings = scoredstring[:numalts]
         
+        # print('Scoredstrings:')
+        # print(scoredstrings)
         return scoredstrings
 
 def main(argv):

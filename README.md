@@ -59,6 +59,8 @@ All programs require python3.
 
 sentalter.py requires [PyFST](https://pyfst.github.io), which requires [OpenFST](https://openfst.org) version 1.3 [(direct link to download)](http://openfst.org/twiki/pub/FST/FstDownload/openfst-1.3.4.tar.gz). Newer versions of OpenFST do not work with PyFST.
 
+However, a fork of PyFST is [available](https://github.com/placebokkk/pyfst) and supports the latest version of OpenFST.
+
 sentalter.py has only been tested in ubuntu linux, and lexalter.py has been tested in ubuntu linux and mac os.
 
 ### Using sequence to sequence models
