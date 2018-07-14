@@ -85,8 +85,10 @@ class AlterSent:
         for sent in altstrings:
             score = float(("%s" % altstrings[sent]).split('(')[1].strip(')'))
             scoredstrings.append((score, sent))
+
+        sent_rescore(scoredstrings)
         scoredstrings.sort()
-        
+
         if len(scoredstrings) > numalts:
             scoredstrings = scoredstring[:numalts]
         
@@ -116,17 +118,24 @@ def main(argv):
         print("lexalter.py -v <word_vectors_txt> -f <language_model_fst>")
         sys.exit(1)
 
+    print('Processing...')
     lv = AlterSent(fname, fstfname, 50000)
     print("Ready")
-    for line in sys.stdin:
-        print()
-        words = tokenizer.word_tokenize(line)
-        lines = lv.fst_alter_sent(words,100)
+    try:
+        while True:
+            line = input()
+            if line.rstrip(' \n') == '':
+                continue
+            print()
+            words = tokenizer.word_tokenize(line)
+            lines = lv.fst_alter_sent(words,100)
 
-        for i, (score, str) in enumerate(lines):
-            print(i, ':', '%.3f' % score, ':', str)
+            for i, (newscore, score, str) in enumerate(lines):
+                print(i, ':', '%.3f' % newscore, ':', '%.3f' % score, ':', str)
 
-        print()
+            print()
+    except EOFError:
+        pass
 
 if __name__ == "__main__":
     main(sys.argv[1:])
