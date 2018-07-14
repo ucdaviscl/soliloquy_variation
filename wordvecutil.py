@@ -98,7 +98,7 @@ class word_vectors:
 
     def getword(self, w, _):
         if not w in self.word2idx:
-            print(f'Word {w} not found')
+            print('Word {} not found'.format(w))
             return
         else:
             return w + ' ' + ' '.join([str(x) for x in self.v[self.word2idx[w]]])
