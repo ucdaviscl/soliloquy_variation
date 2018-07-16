@@ -9,6 +9,9 @@ import functools
 import operator
 import getopt
 
+import subprocess
+import os
+
 # we can optionally use nltk to tag the text
 # and focus on replacement of specific categories
 #
@@ -19,8 +22,23 @@ class AlterSent:
         self.vecs = wordvecutil.word_vectors(vecfname, maxtypes)
         self.lmfst = fst.read_std(lmfname)
         self.maxtypes = maxtypes
+        self.onmt_dir = '/data/OpenNMT'
+        self.onmt_model = '/data/soliloquy_variation/language_model/luamodel_1/model_epoch13_1.16.t7'
+
 
     def sent_rescore(self, sents):
+        currdir = os.getcwd()
+        os.chdir(self.onmt_dir)
+        with open('sentalter_input.txt', 'w') as fout:
+            fout.write('\n'.join([i[1] for i in sents]))
+        subprocess.call(['th', 'lm.lua', '-log_level', 'ERROR', '-gpuid', '1', '-model', self.onmt_model, '-src', 'sentalter_input.txt', '-output', 'sentalter_output.txt', 'score'])
+        with open('sentalter_output.txt') as fin:
+            scores = []
+            for line in fin:
+                scores.append(float(line.rstrip('\n')))
+        nscoredsent = [[scores[i], sents[i][0], sents[i][1]] for i in range(len(sents))]
+        os.chdir(currdir)
+        return nscoredsent
 
 
     def fst_alter_sent(self, words, numalts=5):
@@ -86,7 +104,7 @@ class AlterSent:
             score = float(("%s" % altstrings[sent]).split('(')[1].strip(')'))
             scoredstrings.append((score, sent))
 
-        sent_rescore(scoredstrings)
+        scoredstrings = self.sent_rescore(scoredstrings)
         scoredstrings.sort()
 
         if len(scoredstrings) > numalts:
