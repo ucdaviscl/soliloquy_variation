@@ -11,6 +11,7 @@ import getopt
 
 import subprocess
 import os
+import argparse
 
 # we can optionally use nltk to tag the text
 # and focus on replacement of specific categories
@@ -18,12 +19,14 @@ import os
 # import nltk
 
 class AlterSent:
-    def __init__(self, vecfname, lmfname, maxtypes=0):
+    def __init__(self, vecfname, lmfname, onmt_dir, model_dir, maxtypes=0):
         self.vecs = wordvecutil.word_vectors(vecfname, maxtypes)
         self.lmfst = fst.read_std(lmfname)
         self.maxtypes = maxtypes
-        self.onmt_dir = '/data/OpenNMT'
-        self.onmt_model = '/data/soliloquy_variation/language_model/luamodel_1/model_epoch13_1.16.t7'
+        # self.onmt_dir = '/data/OpenNMT'
+        # self.onmt_model = '/data/soliloquy_variation/language_model/luamodel_1/model_epoch13_1.16.t7'
+        self.onmt_dir = onmt_dir
+        self.onmt_model =  os.path.abspath(model_dir)
 
 
     def sent_rescore(self, sents):
@@ -115,29 +118,15 @@ class AlterSent:
         return scoredstrings
 
 def main(argv):
-    fstfname = ''
-    fname = ''
-
-    try:
-        opts, args = getopt.getopt(argv, "hv:f:")
-    except getopt.GetoptError:
-        print("lexalter.py -v <word_vectors_txt> -f <language_model_fst>")
-        sys.exit(1)
-    for opt, arg in opts:
-        if opt == '-h':
-            print("lexalter.py -v <word_vectors_txt> -f <language_model_fst>")
-            sys.exit()
-        elif opt == '-v':
-            fname = arg
-        elif opt == '-f':
-            fstfname = arg
-
-    if fname == '' or fstfname == '':
-        print("lexalter.py -v <word_vectors_txt> -f <language_model_fst>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description='Sentence variation')
+    parser.add_argument('-v', '--vectors', type = str, default = '', help = 'word vectors', required = True)
+    parser.add_argument('-f', '--fst_lm', type = str, default = '', help = 'fst language model', required = True)
+    parser.add_argument('-d', '--onmt_dir', type = str, default = '', help = 'OpenNMT intallation directory')
+    parser.add_argument('-m', '--onmt_lm', type = str, default = '', help = 'OpenNMT language model')
+    params = parser.parse_args()
 
     print('Processing...')
-    lv = AlterSent(fname, fstfname, 50000)
+    lv = AlterSent(params.vectors, params.fst_lm, params.onmt_dir, params.onmt_lm, 50000)
     print("Ready")
     try:
         while True:
@@ -148,8 +137,8 @@ def main(argv):
             words = tokenizer.word_tokenize(line)
             lines = lv.fst_alter_sent(words,100)
 
-            for i, (newscore, score, str) in enumerate(lines):
-                print(i, ':', '%.3f' % newscore, ':', '%.3f' % score, ':', str)
+            for i, (newscore, score, sent) in enumerate(lines):
+                print(i, ':', '%.3f' % newscore, ':', '%.3f' % score, ':', sent)
 
             print()
     except EOFError:
