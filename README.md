@@ -3,7 +3,7 @@ Generation of lexical and sentence-level variety using word vectors, sequence to
 
 ## External data
 Models and data are available here (password required):
-https://ucdavis.box.com/v/soliloquy
+https://ucdavis.box.com/v/soliloquy (to-do: add OpenNMT language model)
 
 ## Lexical variation
 To get alternatives to a word, use lexalter.py. A file containing word vectors in text format is required (en_vec.txt in the data URL above). The program includes a sample driver that can be invoked like this:
@@ -60,6 +60,8 @@ All programs require python3.
 sentalter.py requires [PyFST](https://pyfst.github.io), which requires [OpenFST](https://openfst.org) version 1.3 [(direct link to download)](http://openfst.org/twiki/pub/FST/FstDownload/openfst-1.3.4.tar.gz). Newer versions of OpenFST do not work with PyFST.
 
 However, a fork of PyFST is [available](https://github.com/placebokkk/pyfst) and supports the latest version of OpenFST.
+
+Using the neural language model requires [OpenNMT](https://github.com/OpenNMT/OpenNMT/), see the installation instructions. Note that GPU support is required to use the pretrained model.
 
 sentalter.py has only been tested in ubuntu linux, and lexalter.py has been tested in ubuntu linux and mac os.
 
