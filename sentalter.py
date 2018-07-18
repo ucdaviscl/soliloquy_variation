@@ -3,7 +3,7 @@
 import sys
 import wordvecutil
 import tokenizer
-import fst
+import pywrapfst as fst
 import math
 import functools
 import operator
@@ -17,7 +17,7 @@ import getopt
 class AlterSent:
     def __init__(self, vecfname, lmfname, maxtypes=0):
         self.vecs = wordvecutil.word_vectors(vecfname, maxtypes)
-        self.lmfst = fst.read_std(lmfname)
+        self.lmfst = fst.Fst.read(lmfname)
         self.maxtypes = maxtypes
 
     def fst_alter_sent(self, words, numalts=5):
@@ -27,14 +27,20 @@ class AlterSent:
         # instead, we just make everything NN
         pos = [(w, 'NN') for w in words]
 
-        altfst = fst.Acceptor(syms=self.lmfst.isyms)
+        # create new empty FST
+        altfst = fst.Fst()
+        altfst.add_state()
         
         for idx, (word, tag) in enumerate(pos):
-            # add the word to the lattice
-            if word in altfst.isyms:
-                altfst.add_arc(idx, idx+1, word, 0)
+            # add the word to the lattice or <unk> if out-of-vocabulary
+            if word in self.lmfst.input_symbols():
+                word_id = self.lmfst.input_symbols().find(word)
+                arc = fst.Arc(word_id, word_id, 0, self.get_state_id(idx+1, altfst))
+                altfst.add_arc(self.get_state_id(idx, altfst), arc)
             else:
-                altfst.add_arc(idx, idx+1, "<unk>", 0)
+                word_id = self.lmfst.input_symbols().find("<unk>")
+                arc = fst.Arc(word_id, word_id, 0, self.get_state_id(idx+1, altfst))
+                altfst.add_arc(self.get_state_id(idx, altfst), arc)
 
             # add word alternatives to the lattice
             if ( tag.startswith('NN') or \
@@ -52,39 +58,64 @@ class AlterSent:
 
                 # add each neighbor to the lattice
                 for widx, (dist, w) in enumerate(nearlist):
-                    if dist > 0.1 and w in altfst.isyms and w != word:
-                        altfst.add_arc(idx, idx+1, w, (math.log(dist) * -1)/1000)
+                    if dist > 0.1 and w in self.lmfst.input_symbols() and w != word:
+                        w_id = self.lmfst.input_symbols().find(w)
+                        arc = fst.Arc(w_id, w_id, (math.log(dist) * -1)/1000, self.get_state_id(idx+1, altfst))
+                        altfst.add_arc(self.get_state_id(idx, altfst), arc)
 
         # mark the final state in the FST
-        altfst[len(words)].final = True
+        altfst.set_final(len(words))
+        altfst.set_start(0)
+
+        # sort lattice prior to rescoring
+        altfst.arcsort()
 
         # rescore the lattice using the language model
-        scoredfst = self.lmfst.compose(altfst)
+        scoredfst = fst.compose(self.lmfst, altfst)
 
         # get best paths in the rescored lattice
-        bestpaths = scoredfst.shortest_path(numalts)
-        bestpaths.remove_epsilon()
+        bestpaths = fst.shortestpath(scoredfst, nshortest=numalts)
+        bestpaths.rmepsilon()
 
         altstrings = {}
 
         # get the strings and weights from the best paths
-        for i, path in enumerate(bestpaths.paths()):
-            path_string = ' '.join(bestpaths.isyms.find(arc.ilabel) for arc in path)
-            path_weight = functools.reduce(operator.mul, (arc.weight for arc in path))
+        for i, path in enumerate(self.paths(bestpaths)):
+            path_string = ' '.join((bestpaths.input_symbols().find(arc.ilabel)).decode('utf-8') for arc in path)
+            path_weight = functools.reduce(operator.add, (float(arc.weight) for arc in path))
             if not path_string in altstrings:
                 altstrings[path_string] = path_weight
-
+        
         # sort strings by weight
         scoredstrings = []
-        for str in altstrings:
-            score = float(("%s" % altstrings[str]).split('(')[1].strip(')'))
-            scoredstrings.append((score, str))
+        for sent in altstrings:
+            score = altstrings[sent]
+            scoredstrings.append((score, sent))
         scoredstrings.sort()
         
         if len(scoredstrings) > numalts:
             scoredstrings = scoredstring[:numalts]
         
         return scoredstrings
+
+    # helper function to check if state is in FST and add state if not
+    def get_state_id(self, state, f):
+        if state in f.states():
+            return state
+        s = f.add_state()
+        return s
+
+    # helper function to conduct depth first search on all paths in an FST
+    def get_paths(self, state, f, prefix=()):
+        if float(f.final(state)) != float('inf'):
+            yield prefix
+        for arc in f.arcs(state):
+            for path in self.get_paths(arc.nextstate, f, prefix+(arc,)):
+                yield path
+
+    # get list of all paths in FST f
+    def paths(self, f):
+        return self.get_paths(f.start(), f)
 
 def main(argv):
     fstfname = ''
