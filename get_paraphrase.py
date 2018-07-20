@@ -5,9 +5,12 @@ import opennmt  as onmt
 from opennmt.runner import Runner
 from opennmt.config import load_model, load_config
 
-from .. import tokenizer
+import tokenizer
 
 tf.logging.set_verbosity('INFO')
+
+os.chdir('paraphrase')
+model_dir = 'model_1/'
 
 config = load_config(['model_1.yml'])
 model = load_model(model_dir, '', model_name = 'NMTSmall')

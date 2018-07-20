@@ -56,12 +56,12 @@ params:
   minimum_learning_rate: 0.000001
   # (optional) Type of scheduled sampling (can be "constant", "linear", "exponential",
   # or "inverse_sigmoid", default: "constant").
-  scheduled_sampling_type: constant
+  # scheduled_sampling_type: constant
   # (optional) Probability to read directly from the inputs instead of sampling categorically
   # from the output ids (default: 1).
-  scheduled_sampling_read_probability: 1
+  # scheduled_sampling_read_probability: 1
   # (optional unless scheduled_sampling_type is set) The constant k of the schedule.
-  scheduled_sampling_k: 0
+  # scheduled_sampling_k: 0
   # (optional) The label smoothing value.
   label_smoothing: 0.1
   # (optional) Width of the beam search (default: 1).
