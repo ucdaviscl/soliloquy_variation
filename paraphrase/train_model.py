@@ -12,8 +12,8 @@ class NMTCustom(onmt.models.SequenceToSequence):
 		super(NMTCustom, self).__init__(
 			source_inputter=onmt.inputters.WordEmbedder(vocabulary_file_key="source_words_vocabulary", embedding_size=512),
 			target_inputter=onmt.inputters.WordEmbedder(vocabulary_file_key="target_words_vocabulary", embedding_size=512),
-			encoder=onmt.encoders.BidirectionalRNNEncoder(num_layers=4, num_units=512, reducer=onmt.layers.ConcatReducer(), cell_class=tf.contrib.rnn.LSTMCell, dropout=0.3,residual_connections=False),
-			decoder = onmt.decoders.self_attention_decoder.SelfAttentionDecoder(num_layers = 4, num_units = 512))
+			encoder=onmt.encoders.BidirectionalRNNEncoder(num_layers=4, num_units=512, reducer=onmt.layers.ConcatReducer(), cell_class=tf.contrib.rnn.LSTMCell, dropout=0.4,residual_connections=False),
+			decoder=onmt.decoders.AttentionalRNNDecoder(num_layers=4, num_units=512, bridge=onmt.layers.CopyBridge(), attention_mechanism_class=tf.contrib.seq2seq.LuongAttention, cell_class=tf.contrib.rnn.LSTMCell, dropout=0.4, residual_connections=False))
 
 def load_custom_model(model_dir, model = None):
   
@@ -64,7 +64,7 @@ def run_model_1():
 	runner = Runner(model, config, seed = None, num_devices = 1, gpu_allow_growth = False, session_config = session_config)
 	runner.train_and_evaluate()
 
-def run_model_2():
+def run_model_2(evaluate = False):
 	tf.logging.set_verbosity('INFO')
 	model_dir = 'model_2/'
 
@@ -72,6 +72,10 @@ def run_model_2():
 	model = load_custom_model(model_dir, NMTCustom())
 	session_config = tf.ConfigProto(intra_op_parallelism_threads=0, inter_op_parallelism_threads=0)
 	runner = Runner(model, config, seed = None, num_devices = 1, gpu_allow_growth = False, session_config = session_config)
-	runner.train_and_evaluate()
+	if evaluate:
+		runner.evaluate()
+	else:
+		runner.train_and_evaluate()
 
-run_model_2()
+if __name__ == '__main__':
+	run_model_2(True)

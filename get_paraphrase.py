@@ -1,4 +1,5 @@
 import os
+import sys
 
 import tensorflow as tf
 import opennmt  as onmt
@@ -6,29 +7,32 @@ from opennmt.runner import Runner
 from opennmt.config import load_model, load_config
 
 import tokenizer
+from paraphrase.train_model import NMTCustom, load_custom_model
 
 tf.logging.set_verbosity('INFO')
 
 os.chdir('paraphrase')
-model_dir = 'model_1/'
+model_dir = 'model_2/'
 
-config = load_config(['model_1.yml'])
-model = load_model(model_dir, '', model_name = 'NMTSmall')
+config = load_config(['model_2.yml'])
+model = load_custom_model(model_dir, NMTCustom())
 session_config = tf.ConfigProto(intra_op_parallelism_threads=0, inter_op_parallelism_threads=0)
 runner = Runner(model, config, seed = None, num_devices = 1, gpu_allow_growth = False, session_config = session_config)
 
-try:
-	while True:
-		line = input()
-		if line.rstrip(' \n') == '':
-			continue
-		print()
-		words = tokenizer.word_tokenize(line)
-		with open('tmp.txt', 'w') as tempout:
-			tempout.write(' '.join(words)+'\n')
-		runner.infer('tmp.txt')
-		os.remove('tmp.txt')
+# try:
+# 	while True:
+# 		line = input()
+# 		if line.rstrip(' \n') == '':
+# 			continue
+# 		print()
+# 		words = tokenizer.word_tokenize(line)
+# 		with open('tmp.txt', 'w') as tempout:
+# 			tempout.write(' '.join(words)+'\n')
+# 		runner.infer('tmp.txt')
+# 		os.remove('tmp.txt')
 
-		print()
-except EOFError:
-	pass
+# 		print()
+# except EOFError:
+# 	pass
+
+runner.infer(sys.argv[1], predictions_file = sys.argv[2])

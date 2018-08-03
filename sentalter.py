@@ -117,7 +117,7 @@ class AlterSent:
         # print(scoredstrings)
         return scoredstrings
 
-def main(argv):
+def main():
     parser = argparse.ArgumentParser(description='Sentence variation')
     parser.add_argument('-v', '--vectors', type = str, default = '', help = 'word vectors', required = True)
     parser.add_argument('-f', '--fst_lm', type = str, default = '', help = 'fst language model', required = True)
@@ -145,4 +145,4 @@ def main(argv):
         pass
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
