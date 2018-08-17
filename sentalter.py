@@ -44,7 +44,7 @@ class AlterSent:
         return nscoredsent
 
 
-    def fst_alter_sent(self, words, numalts=5):
+    def fst_alter_sent(self, words, numalts=5, cutoff = 0):
         # with NLTK we could do POS tagging here
         # pos = nltk.pos_tag(text)
 
@@ -112,6 +112,9 @@ class AlterSent:
 
         if len(scoredstrings) > numalts:
             scoredstrings = scoredstring[:numalts]
+
+        if cutoff > 0:
+            scoredstrings = [s for s in scoredstrings if s[0] <= cutoff]
         
         # print('Scoredstrings:')
         # print(scoredstrings)
