@@ -11,9 +11,10 @@ lv = sentalter.AlterSent('en_vec.txt', 'wiki_other_en.o4.h10m.fst', '/data/OpenN
 eprint = lambda x: print(x, file = sys.stderr)
 
 trainfn = '/data/soliloquy_variation/paraphrase/dstc2_tests/dstc2_user_train_{}.txt'
-outfmt = '/data/soliloquy_variation/paraphrase/dstc2_tests/dstc2_user_train_fstparaphrase_conservative_{}.txt'
+outfmt = '/data/soliloquy_variation/paraphrase/dstc2_tests/dstc2_user_train_fstparaphrase_tenbest_{}.txt'
 source = '/data/soliloquy_variation/paraphrase/dstc2_tests/dstc2_user_shuffled.txt'
-conservative = True
+conservative = False
+n_best = 10
 
 def gen_all_paraphrases():
     with open(source) as fin:
@@ -33,7 +34,12 @@ def gen_all_paraphrases():
     for i, sent in enumerate(sents):
         sys.stdout.write('\rParaphrasing {}/{}'.format(i, len(sents)))
         words = tokenizer.word_tokenize(sent)
-        lines = lv.fst_alter_sent(words, 20, cutoff = sents[sent]['baseline'])
+        
+        if conservative:
+            lines = lv.fst_alter_sent(words, n_best, cutoff = sents[sent]['baseline'])
+        else:
+            lines = lv.fst_alter_sent(words, n_best)
+        
         sents[sent]['para'] = lines
 
     print()

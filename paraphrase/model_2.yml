@@ -3,16 +3,16 @@ model_dir: model_2
 
 data:
   # (required for train_and_eval and train run types).
-  train_features_file: para5m_train.1
-  train_labels_file: para5m_train.2
+  train_features_file: data/para5m_train.1
+  train_labels_file: data/para5m_train.2
 
   # (required for train_end_eval and eval run types).
-  eval_features_file: para5m_test.1
-  eval_labels_file: para5m_test.2
+  eval_features_file: data/para5m_test.1
+  eval_labels_file: data/para5m_test.2
 
   # (optional) Models may require additional resource files (e.g. vocabularies).
-  source_words_vocabulary: para5m_train.1.vocab
-  target_words_vocabulary: para5m_train.2.vocab
+  source_words_vocabulary: data/para5m_train.1.vocab
+  target_words_vocabulary: data/para5m_train.2.vocab
 
 # Model and optimization parameters.
 params:
@@ -65,7 +65,7 @@ params:
   # (optional) The label smoothing value.
   label_smoothing: 0.1
   # (optional) Width of the beam search (default: 1).
-  beam_width: 10
+  beam_width: 30
   # (optional) Length penaly weight to apply on hypotheses (default: 0).
   # length_penalty: 0.2
   # (optional) Maximum decoding iterations before stopping (default: 250).
@@ -132,11 +132,11 @@ infer:
   # (optional) The batch size to use (default: 1).
   batch_size: 10
   # (optional) The number of threads to use for processing data in parallel (default: 1).
-  num_threads: 1
+  num_threads: 20
   # (optional) The number of batches to prefetch asynchronously (default: 1).
-  prefetch_buffer_size: 1
+  prefetch_buffer_size: 20
   # (optional) For compatible models, the number of hypotheses to output (default: 1).
-  n_best: 5
+  n_best: 20
 
 # (optional) Scoring options.
 score:
