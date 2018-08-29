@@ -6,10 +6,10 @@ import random
 import kenlm
 
 binloc = '/data/kenlm/build/bin/'
-expdir = 'pass_1'
+expdir = 'test_3'
 
-trainsrc = 'dstc6_user_train_1.txt'
-paraphrase = 'dstc6_25_para.txt'
+trainsrc = 'dstc6_user_train_5.txt'
+paraphrase = 'dstc6_100_parafst.txt'
 devset = 'full_dialog.complete.clean.dev.txt'
 genfm = 'dstc6_train_addone_{}.txt'
 genfm_eft = 'dstc6_train_cumulative_{}.txt'
@@ -18,7 +18,7 @@ modelfm_eft = 'dstc6_kenlm_cuml_{}.{}'
 
 effective_paraphrases = 'effective_paraphrases.txt'
 
-baseline = 23.35
+baseline = 8.01981490607579
 
 def evaluate(binmodel):
 	model = kenlm.Model(binmodel)
@@ -54,7 +54,7 @@ def conduct():
 
 		with open(os.path.join(expdir, genfm.format(i))) as fin:
 			with open(os.path.join(expdir, modelfm.format(i, 'arpa')), 'w') as fout:
-				subprocess.run([binloc+'lmplz', '-o', '3', '--discount_fallback'], stdin = fin, stdout = fout)
+				subprocess.run([binloc+'lmplz', '-o', '3', '--discount_fallback', '--skip_symbols'], stdin = fin, stdout = fout)
 		subprocess.run([binloc+'build_binary', os.path.join(expdir, modelfm.format(i, 'arpa')), os.path.join(expdir, modelfm.format(i, 'binary'))])
 
 		score = evaluate(os.path.join(expdir, modelfm.format(i, 'binary')))
@@ -63,7 +63,7 @@ def conduct():
 			effectives.append(sent)
 		i+=1
 
-	with open('effective_paraphrases.txt', 'w') as fout:
+	with open(os.path.join(expdir, 'effective_paraphrases.txt'), 'w') as fout:
 		fout.write('\n'.join(effectives)+'\n')
 
 	print('Finished processing {} paraphrases, {} are effective.'.format(i, len(effectives)))
@@ -71,7 +71,7 @@ def conduct():
 def conduct_effectives():
 	with open(trainsrc) as fin:
 		data = fin.read()
-	with open(effective_paraphrases) as fin:
+	with open(os.path.join(expdir, effective_paraphrases)) as fin:
 		paras = fin.read().split('\n')
 	paras = list(set([x.rstrip(' ') for x in paras if len(x) > 0]))
 	random.seed()
@@ -87,7 +87,7 @@ def conduct_effectives():
 
 		with open(os.path.join(expdir, genfm_eft.format(i))) as fin:
 			with open(os.path.join(expdir, modelfm_eft.format(i, 'arpa')), 'w') as fout:
-				subprocess.run([binloc+'lmplz', '-o', '3', '--discount_fallback'], stdin = fin, stdout = fout)
+				subprocess.run([binloc+'lmplz', '-o', '3', '--discount_fallback', '--skip_symbols'], stdin = fin, stdout = fout)
 		subprocess.run([binloc+'build_binary', os.path.join(expdir, modelfm_eft.format(i, 'arpa')), os.path.join(expdir, modelfm_eft.format(i, 'binary'))])
 
 		score = evaluate(os.path.join(expdir, modelfm_eft.format(i, 'binary')))

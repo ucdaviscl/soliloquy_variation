@@ -13,23 +13,31 @@ import subprocess
 import os
 import argparse
 
+import kenlm
+
 # we can optionally use nltk to tag the text
 # and focus on replacement of specific categories
 #
 # import nltk
 
 class AlterSent:
-    def __init__(self, vecfname, lmfname, onmt_dir, model_dir, maxtypes=0):
+    def __init__(self, vecfname, lmfname, onmt_dir, model_dir, kenlm_loc, maxtypes=0):
         self.vecs = wordvecutil.word_vectors(vecfname, maxtypes)
         self.lmfst = fst.read_std(lmfname)
         self.maxtypes = maxtypes
         # self.onmt_dir = '/data/OpenNMT'
         # self.onmt_model = '/data/soliloquy_variation/language_model/luamodel_1/model_epoch13_1.16.t7'
         self.onmt_dir = onmt_dir
-        self.onmt_model =  os.path.abspath(model_dir)
+        self.onmt_model =  model_dir
+        self.kenlm_loc = kenlm_loc
+        if self.onmt_model != '':
+            self.sent_rescore = self.sent_rescore_onmt
+            self.onmt_model = os.path.abspath(self.onmt_model)
+        else:
+            self.sent_rescore = self.sent_rescore_kenlm
 
 
-    def sent_rescore(self, sents):
+    def sent_rescore_onmt(self, sents):
         currdir = os.getcwd()
         os.chdir(self.onmt_dir)
         with open('sentalter_input.txt', 'w') as fout:
@@ -41,6 +49,11 @@ class AlterSent:
                 scores.append(float(line.rstrip('\n')))
         nscoredsent = [[scores[i], sents[i][0], sents[i][1]] for i in range(len(sents))]
         os.chdir(currdir)
+        return nscoredsent
+
+    def sent_rescore_kenlm(self, sents):
+        model = kenlm.Model(self.kenlm_loc)
+        nscoredsent = [[model.perplexity(sents[i][1]), sents[i][0], sents[i][1]] for i in range(len(sents))]
         return nscoredsent
 
 
@@ -126,10 +139,11 @@ def main():
     parser.add_argument('-f', '--fst_lm', type = str, default = '', help = 'fst language model', required = True)
     parser.add_argument('-d', '--onmt_dir', type = str, default = '', help = 'OpenNMT intallation directory')
     parser.add_argument('-m', '--onmt_lm', type = str, default = '', help = 'OpenNMT language model')
+    parser.add_argument('-k', '--kenlm', type = str, default = '', help = 'KenLM model')
     params = parser.parse_args()
 
     print('Processing...')
-    lv = AlterSent(params.vectors, params.fst_lm, params.onmt_dir, params.onmt_lm, 50000)
+    lv = AlterSent(params.vectors, params.fst_lm, params.onmt_dir, params.onmt_lm, params.kenlm, 50000)
     print("Ready")
     try:
         while True:
