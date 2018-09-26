@@ -3,22 +3,24 @@ import subprocess
 import os
 import random
 
+import numpy as np
+from scipy import stats
 import kenlm
 
 binloc = '/data/kenlm/build/bin/'
 expdir = 'test_3'
 
-trainsrc = 'dstc6_user_train_5.txt'
-paraphrase = 'dstc6_100_parafst.txt'
-devset = 'full_dialog.complete.clean.dev.txt'
-genfm = 'dstc6_train_addone_{}.txt'
-genfm_eft = 'dstc6_train_cumulative_{}.txt'
-modelfm = 'dstc6_kenlm_{}.{}'
-modelfm_eft = 'dstc6_kenlm_cuml_{}.{}'
+trainsrc = 'train_250.txt'
+paraphrase = 'train_1000_para.txt'
+devset = 'valid.out.txt'
+genfm = 'ubuntu_train_addone_{}.txt'
+genfm_eft = 'ubuntu_train_cumulative_{}.txt'
+modelfm = 'ubuntu_kenlm_addone_{}.{}'
+modelfm_eft = 'ubuntu_kenlm_cuml_{}.{}'
 
 effective_paraphrases = 'effective_paraphrases.txt'
 
-baseline = 8.01981490607579
+baseline = 301.0796970484378
 
 def evaluate(binmodel):
 	model = kenlm.Model(binmodel)
@@ -54,7 +56,7 @@ def conduct():
 
 		with open(os.path.join(expdir, genfm.format(i))) as fin:
 			with open(os.path.join(expdir, modelfm.format(i, 'arpa')), 'w') as fout:
-				subprocess.run([binloc+'lmplz', '-o', '3', '--discount_fallback', '--skip_symbols'], stdin = fin, stdout = fout)
+				subprocess.run([binloc+'lmplz', '-o', '3', '--skip_symbols'], stdin = fin, stdout = fout)
 		subprocess.run([binloc+'build_binary', os.path.join(expdir, modelfm.format(i, 'arpa')), os.path.join(expdir, modelfm.format(i, 'binary'))])
 
 		score = evaluate(os.path.join(expdir, modelfm.format(i, 'binary')))
@@ -92,11 +94,10 @@ def conduct_effectives():
 
 		score = evaluate(os.path.join(expdir, modelfm_eft.format(i, 'binary')))
 
-		scores.append([len(hist), score])
+		scores.append(score)
 
-	ppt(scores)
+	return scores
 
 
 if __name__ == '__main__':
 	conduct_effectives()
-

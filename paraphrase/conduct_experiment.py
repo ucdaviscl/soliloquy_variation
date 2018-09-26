@@ -34,10 +34,10 @@ def gen_model():
 
 		with open(trainfn.format(i)) as fin:
 			with open(modelfn.format(i, 'arpa'), 'w') as fout:
-				subprocess.run([binloc+'lmplz', '-o', '3', '--skip_symbols'], stdin = fin, stdout = fout)
+				subprocess.run([binloc+'lmplz', '-o', '3'], stdin = fin, stdout = fout)
 		subprocess.run([binloc+'build_binary', modelfn.format(i, 'arpa'), modelfn.format(i, 'binary')])
 
-def evaluate():
+def eval():
 	ppls = []
 	for i in range(1,101):
 		# with open(devfn) as fin:
@@ -59,4 +59,4 @@ def evaluate():
 
 if __name__ == '__main__':
 	gen_model()
-	evaluate()
+	eval()

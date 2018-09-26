@@ -35,7 +35,9 @@ runner = Runner(model, config, seed = None, num_devices = 1, gpu_allow_growth = 
 # except EOFError:
 # 	pass
 
-rawtrain = 'dstc2_user_train_{}.txt'
-paraout = 'dstc2_user_train_nmtparaphrase_{}.txt'
-for i in range(1,101):
-	runner.infer(os.path.join('dstc2_tests', rawtrain.format(i)), predictions_file = os.path.join('dstc2_tests', paraout.format(i)))
+# rawtrain = 'dstc2_user_train_{}.txt'
+# paraout = 'dstc2_user_train_nmtparaphrase_{}.txt'
+# for i in range(1,101):
+# 	runner.infer(os.path.join('dstc2_tests', rawtrain.format(i)), predictions_file = os.path.join('dstc2_tests', paraout.format(i)))
+
+runner.infer(sys.argv[1], predictions_file = sys.argv[2])
