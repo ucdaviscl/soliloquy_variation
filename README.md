@@ -73,7 +73,7 @@ where en_vec.txt contains word vectors in text format, and wiki_other_en.o4.h10m
 
 #### Generating batch of paraphrases
 
-Use [`get_fst_paraphrase.py`](get_fst_paraphrase.py) to generate paraphrases sentence by sentence from an input file. You can use either an OpenNMT or a KenLM language model to rescore generated sentences.
+Use [`get_fst_paraphrases.py`](get_fst_paraphrases.py) to generate paraphrases sentence by sentence from an input file. You can use either an OpenNMT or a KenLM language model to rescore generated sentences.
 
 ```
 $ python3 get_fst_paraphrase.py -v [word vectors] -f [fst model] -i [input] -o [output]
