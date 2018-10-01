@@ -20,6 +20,13 @@ import kenlm
 #
 # import nltk
 
+parser = argparse.ArgumentParser(description='Sentence variation')
+parser.add_argument('-v', '--vectors', type = str, default = '', help = 'word vectors', required = True)
+parser.add_argument('-f', '--fst_lm', type = str, default = '', help = 'fst language model', required = True)
+parser.add_argument('-d', '--onmt_dir', type = str, default = '', help = 'OpenNMT intallation directory')
+parser.add_argument('-m', '--onmt_lm', type = str, default = '', help = 'OpenNMT language model')
+parser.add_argument('-k', '--kenlm', type = str, default = '', help = 'KenLM model')
+
 class AlterSent:
     def __init__(self, vecfname, lmfname, onmt_dir, model_dir, kenlm_loc, maxtypes=0):
         self.vecs = wordvecutil.word_vectors(vecfname, maxtypes)
@@ -134,12 +141,6 @@ class AlterSent:
         return scoredstrings
 
 def main():
-    parser = argparse.ArgumentParser(description='Sentence variation')
-    parser.add_argument('-v', '--vectors', type = str, default = '', help = 'word vectors', required = True)
-    parser.add_argument('-f', '--fst_lm', type = str, default = '', help = 'fst language model', required = True)
-    parser.add_argument('-d', '--onmt_dir', type = str, default = '', help = 'OpenNMT intallation directory')
-    parser.add_argument('-m', '--onmt_lm', type = str, default = '', help = 'OpenNMT language model')
-    parser.add_argument('-k', '--kenlm', type = str, default = '', help = 'KenLM model')
     params = parser.parse_args()
 
     print('Processing...')

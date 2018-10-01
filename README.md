@@ -1,17 +1,30 @@
 # Soliloquy Variation
-Generation of lexical and sentence-level variety using word vectors, sequence to sequence models, and transducers
+
+- Generation of lexical and sentence-level variety using word vectors, sequence to sequence models, and transducers.
+- Tools for validating generated sentence variations.
+
+## Dependencies
+
+- Python >= 3.6
+- [PyFST](https://github.com/placebokkk/pyfst) with OpenFST (required for fst sentence variation)
+- [OpenNMT](https://github.com/OpenNMT/OpenNMT) with GPU support (required for neural language model)
+- [KenLM](https://github.com/kpu/kenlm) and its Python module (required for paraphrase testing)
+- [OpenNMT-tf](https://github.com/OpenNMT/OpenNMT-tf) + [Tensorflow](https://www.tensorflow.org/) (required for neural machine paraphrasing)
 
 ## External data
+
 Models and data are available here (password required):
 https://ucdavis.box.com/v/soliloquy (to-do: add OpenNMT language model)
 
 ## Lexical variation
-To get alternatives to a word, use lexalter.py. A file containing word vectors in text format is required (en_vec.txt in the data URL above). The program includes a sample driver that can be invoked like this:
+
+Usage:
+
 ```
-python lexalter.py -v en_vec.txt
+$ python3 lexalter.py -v [word embeddings file]
 ```
 
-Here, en_vec.txt is a file containing word vectors using the word2vec text format. We assume the words are ordered from most to least frequent. Input from stdin is a word followed by several words that provide the context. For example, the input:
+A word embeddings file `en_vec.txt` is available in the data folder. The file is expected to be in the word2vec text format. We assume the words are ordered from most to least frequent. Input from stdin is a word followed by several words that provide the context. For example, the input:
 ```
 orange
 ```
@@ -46,24 +59,76 @@ green
 olive
 ```
 
-## Sentence variation
+## Sentence Variation
+
 ### Using FSTs
+
 To get sentence variation using word vectors and a language model, use sentalter.py. It includes a sample driver, invoked as follows:
+
 ```
 python sentalter.py -v en_vec.txt -f wiki_other_en.o4.h10m.fst
 ```
+
 where en_vec.txt contains word vectors in text format, and wiki_other_en.o4.h10m.fst is a 4-gram language model encoded as an OpenFST finite-state transducer. Input for the sample driver is one sentence per line in stdin, and the output is a scored list of alternative sentences.
 
-#### Requirements
-All programs require python3.
+#### Generating batch of paraphrases
 
-sentalter.py requires [PyFST](https://pyfst.github.io), which requires [OpenFST](https://openfst.org) version 1.3 [(direct link to download)](http://openfst.org/twiki/pub/FST/FstDownload/openfst-1.3.4.tar.gz). Newer versions of OpenFST do not work with PyFST.
+Use [`get_fst_paraphrase.py`](get_fst_paraphrase.py) to generate paraphrases sentence by sentence from an input file. You can use either an OpenNMT or a KenLM language model to rescore generated sentences.
 
-However, a fork of PyFST is [available](https://github.com/placebokkk/pyfst) and supports the latest version of OpenFST.
-
-Using the neural language model requires [OpenNMT](https://github.com/OpenNMT/OpenNMT/), see the installation instructions. Note that GPU support is required to use the pretrained model.
-
-sentalter.py has only been tested in ubuntu linux, and lexalter.py has been tested in ubuntu linux and mac os.
+```
+$ python3 get_fst_paraphrase.py -v [word vectors] -f [fst model] -i [input] -o [output]
+```
 
 ### Using sequence to sequence models
+
 The external data directory above contains neural models for text simplification that work with [OpenNMT](http://opennmt.net). The README.txt file in the seq2seq subdirectory in the data URL contains instructions for using the sequence to sequence models.
+
+### Using neural machine paraphrase models
+
+#### Training and testing
+
+1. To train a neural machine paraphrase model, you will need a training set containing paraphrases. We used the 5.3M+ processed and filtered data by [John Wieting](https://www.cs.cmu.edu/~jwieting/). You can use [`split_input.py`](paraphrase/split_input.py) to split the data into corresponding pairs 
+
+2. Generate vocabularies for training and development sets using [`train_model.py`](paraphrase/train_model.py)
+
+   ```
+   $ python3 train_model.py get_vocab -r [source] -t [target]
+   ```
+
+3. Define the parameters of your model in a YAML file, see [`nmp_model.yml`](paraphrase/nmp_model.yml) as an example. You need to specify the save folder and locations of training files, training vocabularies, and development files (if using them).
+
+4. Train the model.
+
+   ```
+   $ python3 train_model.py train -c [configuration file] -s [save folder]
+   ```
+
+5. Evaluate the model.
+
+   ```
+   $ python3 train_model.py evaluate -c [configuration file] -s [save folder]
+   ```
+
+#### Generating paraphrases
+
+Use [`get_nmp_paraphrases.py`](get_nmp_paraphrases.py) to generate paraphrases sentence by sentence from an input file.
+
+```
+$ python3 get_nmp_paraphrase.py -d [model save folder] -c [configuration file] -i [input] -o [output]
+```
+
+## Testing
+
+### Testing the effects of reducing size of training file
+
+We use [KenLM](https://github.com/kpu/kenlm) for fast language model evaluation, and you need to install both C++ binaries and the Python module. [`conduct_experiment.py`](paraphrase/conduct_experiment.py) tests the effects of data size by training language models using 1%, 2%, ..., 100% of the data and testing those models with a development set (number of partitions and how large each part is can be set). To generate KenLM models:
+
+```
+$ python3 conduct_experiment.py train -b [KenLM binary location] -s [souce] -t --gen_dev [development file] -f [folder to store generated files]
+```
+
+KenLM binary location is where compiled programs (e.g. `lmplz` and `query`) are stored. After models are generated, to test them:
+
+```
+$ python3 conduct_experiment.py evaluate -f [folder] -d [development set] -r [results file]
+```

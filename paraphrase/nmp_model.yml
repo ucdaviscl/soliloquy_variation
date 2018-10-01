@@ -1,22 +1,18 @@
-# WARNING:
-# Do not use this file as is! It only lists and documents available options
-# without caring about their consistency.
-
 # The directory where models and summaries will be saved. It is created if it does not exist.
-model_dir: model_1
+model_dir: nmp_model
 
 data:
   # (required for train_and_eval and train run types).
-  train_features_file: para5m_train.1
-  train_labels_file: para5m_train.2
+  train_features_file: data/para5m_train.1
+  train_labels_file: data/para5m_train.2
 
   # (required for train_end_eval and eval run types).
-  eval_features_file: para5m_test.1
-  eval_labels_file: para5m_test.2
+  eval_features_file: data/para5m_test.1
+  eval_labels_file: data/para5m_test.2
 
   # (optional) Models may require additional resource files (e.g. vocabularies).
-  source_words_vocabulary: para5m_train.1.vocab
-  target_words_vocabulary: para5m_train.2.vocab
+  source_words_vocabulary: data/para5m_train.1.vocab
+  target_words_vocabulary: data/para5m_train.2.vocab
 
 # Model and optimization parameters.
 params:
@@ -47,15 +43,15 @@ params:
   # This value may change the semantics of other decay options. See the documentation or the code.
   decay_type: exponential_decay
   # (optional unless decay_type is set) The learning rate decay rate.
-  decay_rate: 0.7
+  decay_rate: 0.65
   # (optional unless decay_type is set) Decay every this many steps.
-  decay_steps: 100000
+  decay_steps: 50000
   # (optional) The number of training steps that make 1 decay step (default: 1).
   decay_step_duration: 1
   # (optional) If true, the learning rate is decayed in a staircase fashion (default: True).
   staircase: true
   # (optional) After how many steps to start the decay (default: 0).
-  start_decay_steps: 500000
+  start_decay_steps: 100000
   # (optional) Stop decay when this learning rate value is reached (default: 0).
   minimum_learning_rate: 0.000001
   # (optional) Type of scheduled sampling (can be "constant", "linear", "exponential",
@@ -69,7 +65,7 @@ params:
   # (optional) The label smoothing value.
   label_smoothing: 0.1
   # (optional) Width of the beam search (default: 1).
-  beam_width: 5
+  beam_width: 30
   # (optional) Length penaly weight to apply on hypotheses (default: 0).
   # length_penalty: 0.2
   # (optional) Maximum decoding iterations before stopping (default: 250).
@@ -117,13 +113,13 @@ eval:
   # (optional) The batch size to use (default: 32).
   batch_size: 32
   # (optional) The number of threads to use for processing data in parallel (default: 1).
-  num_threads: 1
+  num_threads: 16
   # (optional) The number of batches to prefetch asynchronously (default: 1).
   prefetch_buffer_size: 1
   # (optional) Evaluate every this many seconds (default: 18000).
   eval_delay: 7200
   # (optional) Save evaluation predictions in model_dir/eval/.
-  save_eval_predictions: false
+  save_eval_predictions: true
   # (optional) Evalutator or list of evaluators that are called on the saved evaluation predictions.
   # Available evaluators: BLEU, BLEU-detok, ROUGE
   external_evaluators: BLEU
@@ -136,11 +132,11 @@ infer:
   # (optional) The batch size to use (default: 1).
   batch_size: 10
   # (optional) The number of threads to use for processing data in parallel (default: 1).
-  num_threads: 1
+  num_threads: 20
   # (optional) The number of batches to prefetch asynchronously (default: 1).
-  prefetch_buffer_size: 1
+  prefetch_buffer_size: 20
   # (optional) For compatible models, the number of hypotheses to output (default: 1).
-  n_best: 1
+  n_best: 20
 
 # (optional) Scoring options.
 score:

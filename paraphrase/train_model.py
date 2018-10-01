@@ -7,6 +7,17 @@ import opennmt as onmt
 from opennmt.runner import Runner
 from opennmt.config import load_model, load_config
 
+agpsr = argparse.ArgumentParser(description = 'Train or evaluate an OpenNMT-tf based neural machine translation model.')
+agpsr.add_argument('action', choices = ['get_vocab', 'train', 'evaluate'])
+agpsr.add_argument('-r', '--source', type = str, default = '', help = 'Name of the source file')
+agpsr.add_argument('-t', '--target', type = str, default = '', help = 'Name of the target file')
+agpsr.add_argument('-m', '--max_size', type = int, default = 80000, help = 'Maximum number of tokens in the vocabulary')
+agpsr.add_argument('--min_freq', type = int, default = 2, help = 'Minimum count of tokens in the vocabulary')
+
+agpsr.add_argument('-c', '--config', type = str, default = '', help = 'Name of the configuration file')
+agpsr.add_argument('-s', '--save', type = str, default = '', help = 'Name of the save folder')
+
+
 class NMTCustom(onmt.models.SequenceToSequence):
 	def __init__(self):
 		super(NMTCustom, self).__init__(
@@ -37,7 +48,7 @@ def load_custom_model(model_dir, model = None):
 
   return model
 
-def get_vocab():
+def get_vocab(source, target, max_size, min_frequency):
 	tokenizer = onmt.tokenizers.SpaceTokenizer()
 
 	special_tokens = [onmt.constants.PADDING_TOKEN, onmt.constants.START_OF_SENTENCE_TOKEN, onmt.constants.END_OF_SENTENCE_TOKEN]
@@ -45,37 +56,33 @@ def get_vocab():
 	invocab = onmt.utils.Vocab(special_tokens = special_tokens)
 	outvocab = onmt.utils.Vocab(special_tokens = special_tokens)
 
-	invocab.add_from_text('para5m_train.1', tokenizer=tokenizer)
-	outvocab.add_from_text('para5m_train.2', tokenizer=tokenizer)
+	invocab.add_from_text(source, tokenizer=tokenizer)
+	outvocab.add_from_text(target, tokenizer=tokenizer)
 
-	invocab = invocab.prune(max_size=80000, min_frequency=2)
-	outvocab = outvocab.prune(max_size=80000, min_frequency=2)
+	invocab = invocab.prune(max_size=max_size, min_frequency=min_frequency)
+	outvocab = outvocab.prune(max_size=max_size, min_frequency=min_frequency)
 
-	invocab.serialize('para5m_train.1.vocab')
-	outvocab.serialize('para5m_train.2.vocab')
+	invocab.serialize(f'{source}.vocab')
+	outvocab.serialize(f'{target}.vocab')
 
-def run_model_1():
+
+def run_model(config, save_dir, evaluate_only = False):
 	tf.logging.set_verbosity('INFO')
-	model_dir = 'model_1/'
 
-	config = load_config(['model_1.yml'])
-	model = load_model(model_dir, '', model_name = 'NMTSmall')
+	config = load_config([config])
+	model = load_custom_model(save_dir, NMTCustom())
 	session_config = tf.ConfigProto(intra_op_parallelism_threads=0, inter_op_parallelism_threads=0)
 	runner = Runner(model, config, seed = None, num_devices = 1, gpu_allow_growth = False, session_config = session_config)
-	runner.train_and_evaluate()
-
-def run_model_2(evaluate = False):
-	tf.logging.set_verbosity('INFO')
-	model_dir = 'model_2/'
-
-	config = load_config(['model_2.yml'])
-	model = load_custom_model(model_dir, NMTCustom())
-	session_config = tf.ConfigProto(intra_op_parallelism_threads=0, inter_op_parallelism_threads=0)
-	runner = Runner(model, config, seed = None, num_devices = 1, gpu_allow_growth = False, session_config = session_config)
-	if evaluate:
+	if evaluate_only:
 		runner.evaluate()
 	else:
 		runner.train_and_evaluate()
 
 if __name__ == '__main__':
-	run_model_2(True)
+	args = agpsr.parse_args()
+	if args.action == 'get_vocab':
+		get_vocab(args.source, args.target, args.max_size, args.min_freq)
+	elif args.action == 'train':
+		run_model(args.config, args.save)
+	else:
+		run_model(args.config, args.save, True)

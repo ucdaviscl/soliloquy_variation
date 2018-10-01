@@ -1,5 +1,10 @@
 import sys
 
+'''
+Given a corpus of lines of pairs of sentences separated tab, and split into
+two different files.
+'''
+
 filename = sys.argv[1]
 
 out1 = filename + '.1'

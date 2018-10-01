@@ -4,7 +4,17 @@ import re
 
 import kenlm
 
+'''
+This is a helper function that takes a file prefix (e.g. dataset_kenlm) of kenlm models and a
+development set, and generates the evaluation results in a file. This program
+assumes that the generated files have a integer marking following the prefix,
+separated by an undedrscore ('_'), and that the markings are continuous starting
+from 0.
+'''
 
+
+# Evaluate a kenlm model, given the name of the binary model and a testing file.
+# Perplexity is computed consistently with KenLM's query program with unknowns.
 def evalken(binmodel, devset):
 	model = kenlm.Model(binmodel)
 	score = 0

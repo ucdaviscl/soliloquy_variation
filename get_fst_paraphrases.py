@@ -19,32 +19,32 @@ print('Initializing...')
 lv = sentalter.AlterSent(params.vectors, params.fst_lm, params.onmt_dir, params.onmt_lm, params.kenlm, 50000)
 
 if params.output:
-    f = open(params.output, 'w')
-    myprint = lambda x: f.write(str(x)+'\n')
+	f = open(params.output, 'w')
+	myprint = lambda x: f.write(str(x)+'\n')
 else:
-    f = None
-    myprint = print
+	f = None
+	myprint = print
 eprint = lambda x: print(x, file = sys.stderr)
 
 with open(params.input) as fin:
-    sents = dict()
-    for line in fin:
-        l = line.rstrip('\n ')
-        if l not in sents:
-            sents[l] = 0
-        sents[l]+=1
+	sents = dict()
+	for line in fin:
+		l = line.rstrip('\n ')
+		if l not in sents:
+			sents[l] = 0
+		sents[l]+=1
 
 i=1
 for sent in sents:
-    eprint('Sentence {} of {}'.format(i, len(sents)))
-    i+=1
-    words = tokenizer.word_tokenize(sent)
-    lines = lv.fst_alter_sent(words, params.num)
-    for j in range(sents[sent]):
-        for x in lines:
-            myprint(x[2])
+	eprint('Sentence {} of {}'.format(i, len(sents)))
+	i+=1
+	words = tokenizer.word_tokenize(sent)
+	lines = lv.fst_alter_sent(words, params.num)
+	for j in range(sents[sent]):
+		for x in lines:
+			myprint(x[2])
 
 eprint('Output file should be randomly shuffled before used.')
 
 if f:
-    f.close()
+	f.close()
