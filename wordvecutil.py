@@ -24,7 +24,7 @@ class word_vectors:
     
     def load_vectors(self, fname, max=0):
         cnt = 0
-        with open(fname) as f:
+        with open(fname, encoding='utf-8') as f:
             toks = f.readline().split()
             numtypes = int(toks[0])
             dim = int(toks[1])

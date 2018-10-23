@@ -40,8 +40,10 @@ class AlterSent:
         if self.onmt_model != '':
             self.sent_rescore = self.sent_rescore_onmt
             self.onmt_model = os.path.abspath(self.onmt_model)
-        else:
+        elif self.kenlm_loc != '':
             self.sent_rescore = self.sent_rescore_kenlm
+        else:
+            self.sent_rescore =	self.sent_rescore_dummy
 
 
     def sent_rescore_onmt(self, sents):
@@ -63,6 +65,9 @@ class AlterSent:
         nscoredsent = [[model.perplexity(sents[i][1]), sents[i][0], sents[i][1]] for i in range(len(sents))]
         return nscoredsent
 
+    def sent_rescore_dummy(self, sents):
+        nscoredsent = [[sents[i][0], sents[i][0], sents[i][1]] for i in range(len(sents))]
+        return nscoredsent
 
     def fst_alter_sent(self, words, numalts=5, cutoff = 0):
         # with NLTK we could do POS tagging here
