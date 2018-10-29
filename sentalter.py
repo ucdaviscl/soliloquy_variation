@@ -161,7 +161,7 @@ def main():
             lines = lv.fst_alter_sent(words,100)
 
             for i, (newscore, score, sent) in enumerate(lines):
-                print(i, ':', '%.3f' % newscore, ':', '%.3f' % score, ':', sent)
+                print(i, ':', '%.3f' % newscore, ':', '%.3f' % score, ':', sent.encode())
 
             print()
     except EOFError:

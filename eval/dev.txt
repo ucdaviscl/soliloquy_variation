@@ -1,0 +1,790 @@
+make an appointment to reserve conference room 100 later this week for a meeting
+monday at 3pm .
+is there supposed to be a blizzard in brentwood on friday ?
+thanks .
+address to the gas station
+ok , please give me directions via a route that avoids all heavy traffic .
+awesome thank you
+get me directions to the nearest starbucks
+yes please .
+yes please .
+thank you car , please set the gps to get there on the fastest route .
+remind me of the time for today 's dinner
+thank you
+remind me that i need to get my shot on the 12th at about 5 pm
+great. thanks
+what is the weather today
+i want to know if it is raining in alhambra today
+thank you !
+send me to the nearest gas station
+where is valero and is there any traffic on the way ?
+thank you
+what will be the highest temperature in downtown chicago on tuesday ?
+thanks .
+is it misty in oakland now ?
+thank you .
+give me directions to nearest mall
+give me the address .
+thank you car , please pick the quickest way to get there !
+is it gon na be dry in carson on sunday ?
+thank you .
+what time and day is my doctor 's appointment on
+thank you
+what will the temperature be for the next week
+san mateo .
+thanks .
+i need to schedule a meeting
+what is the weather
+san francisco
+thank you !
+car i 'm desiring to eat pizza , please pick a restaurant around here and avoid all heavy traffic
+what is the address ?
+thanks !
+i need the address of a the shopping center that i can get to the quickest from here
+yes , please , just pick the quickest route and let 's go there !
+thanks for all the help .
+what is today 's forecast
+please check for boston .
+okay , thank you .
+car i need to get home , it should be near me , please highlight its position on the map
+avoid all heavy traffic and let 's go there , thank you !
+thanks so much .
+what is the forecast for today and tomorrow
+will it be overcast in downtown chicago today or tomorrow ?
+very nice to know , thanks .
+set a reminder that i have a lab appointment with tom at 4pm on the 5th of this month
+can you find out the parties attending and time for my optometrist appointment ?
+that will do , thank you kindly .
+is it going to be cloudy in the next 7 days
+chicago please .
+set a reminder for my daughter 's swimming lessons
+i need it to be set for 7 pm on the 1st .
+thank you car .
+i have a lab appointment with alex at 2 at the end of march
+yes , please .
+thank you
+will it snow this week
+cleveland
+thank you car .
+what hospital is nearby ?
+which one is quickest to reach ?
+sure , thank you !
+is it gon na rain in camarillo today and tomorrow ?
+thanks .
+car is it going to snow today
+durham .
+thank you car !
+schedule my 10 am dentist appointment on friday with my father .
+list my current schedule .
+list my schedule for friday .
+thank you so much !
+what will the temperature be for the next week
+i would like the temperature for alhambra please
+thank you very much !
+where can i get groceries ?
+can you pick a quick route for me ?
+thanks so much .
+schedule a yoga activity at 9am with my sister
+no , schedule my yoga activity for today .
+i need directions to a grocery store
+yes , give me the address .
+sounds great. thank you .
+are there clear skies in los angeles today ?
+thank you !
+will it be hot in inglewood over the next few days ?
+thank you very much .
+where does my friend live ?
+is there any traffic to her house ?
+thanks , let 's go there .
+is my doctors appointment on tuesday or wednesday
+okay thank you .
+please give me the address and directions via a route that avoids all heavy traffic to a grocery store .
+mmm , i understand.. then let 's go there , thank you car !
+thank you .
+what 's the weather like in downtown chicago
+wednesday , please. is it gon na snow ?
+thank you so much !
+is it going to rain today
+downtown chicago , please
+great , thank you
+is it going to snow today
+inglewood please .
+that is nice to know , goodbye .
+is snow forecasted this week
+manhattan .
+thanks .
+can you give me directions to the nearest hotel
+thank you .
+put my eye doctor appointment into the calendar it 's tomorrow at 3 pm and remind me 2 hours before
+thank you !
+no , thanks .
+what 's the weather like in new york city
+will it drizzle on tuesday ?
+awesome , thanks
+set a reminder for dinner on august 8th at 3pm with my aunt .
+thanks
+i 'm looking for some takeout chinese food
+sounds good .
+check the date and time for my swim lesson
+please give me an address and directions via the fastest route to a local grocery store
+sounds perfect. set the navigation for there , thank you .
+i need directions to my house and avoid all heavy traffic
+thank you car !
+what will the weather be like tomorrow
+will it drizzle in menlo park ?
+thanks .
+set meeting for saturday 11am with the boss .
+thank you .
+set a reminder for tennis with ana at 9am on the 12th of this month .
+thank you .
+please give me an address and directions by the fastest route to a rest stop nearby .
+yes .
+thank you car , let 's go there !
+give me the nearest coffee shop .
+what 's the address ? i guess it will have to do .
+thank you car , please pick the quickest route !
+is it gon na be warm in menlo park on monday ?
+thank you car , this sounds great !
+what time is my lab appointment and who is coming ?
+thanks .
+show me directions to the nearest grocery store
+yes i guess. program the address and let 's get going .
+what 's the address of the store , please ? please direct me via a quick route .
+that 's ok , thank you .
+set reminder for tennis lesson on august 12th at 4:50 pm
+please schedule a swimming activity on sunday at 4pm with my brother .
+thank you .
+that is all , thanks .
+check out the seven day forecast to see if it will be foggy in durham
+thanks , this is great !
+what time is my meeting at
+thank you .
+what is the weather next week in new york
+will it be windy in new york anytime this week ?
+thank you !
+find directions to home
+can you get me the address ?
+thanks so much for the information .
+give me the weekly weather forecast
+in danville , will it be dry this week ?
+thank you car !
+will it be misty in brentwood today and tomorrow ?
+thank you .
+what is the lowest weekend temperature in oakland ?
+thanks .
+where can i get chinese food ?
+what is the address ?
+yes , please , set the gps to go there , thank you !
+from the two day forecast what will be the highest temperature in manhattan ?
+thanks .
+remind me about the date and time that he was going to be there and what the agenda is for his business meaning
+what time and date is the meeting , and what will we be doing during the meeting ?
+when is the next cloudy day
+san francisco .
+okay , thank you !
+schedule a football activity with ana on the 6th at 7pm .
+thank you again .
+car please find for me the quickest route to get to some coffee or tea place
+what is the address ?
+thanks set the gps please .
+car i 'm desiring to eat chinese !
+which is closer ?
+please pick the best route for me and let 's go there !
+thank you car !
+is there going to be frost in los angeles on tuesday ?
+thank you .
+schedule a new meeting
+it is today at 1 pm with hr to go over the budget
+nothing else for now .
+will it be hot in exeter or the next few days ?
+thanks .
+will it be drizzle in camarillo tomorrow ?
+thank you .
+find pizza .
+is any of them within 5 miles from our position ?
+then let 's go at pizza my heart , please pick a route with no traffic !
+thank you car !
+i 'm looking for a place to eat can you show me directions to the nearest fast food restaurant
+sure , let 's go there , just pick a route with no traffic please
+set a reminder for my conference call tomorrow
+thank you .
+what 's the forecast going to be for today and tomorrow
+brentwood , please : there will be any blizzard ?
+thank you
+will it be misty on friday in exeter ?
+thanks .
+give me directions to the nearest place where i can have a cup of tea
+yes , please , and also pick the fastest route for me !
+thanks !
+what is the forecast for the city this week
+can you tell me if it will be cloudy in san francisco this week ?
+great , thank you
+where does my friend live ?
+thank you .
+how far away am i now from the house ?
+thanks !
+set date for a meeting
+august 3rd at 11am
+thanks
+tell me when my dinner reservations are scheduled for
+alright , thanks .
+will san jose be hot any time this week ?
+thanks .
+i wan na go to my friends ' house , it should be nearby , can you show me their position on the map ?
+thanks .
+what 's the weather like
+the current weather in san mateo .
+thanks .
+what is the date and time of my next football activity ?
+thank you kindly .
+put my optometrist appointment in my calendar
+my optometrist appointment is at 10am on sunday .
+i 'm looking for some takeout chinese food
+yes where is it ?
+please direct me via the route that avoids all heavy traffic .
+thank you car !
+is it raining next week
+san francisco
+okay , thank you car !
+car what is the date and time of my next dentist appointment
+that is all. thank you !
+when am i scheduled for tennis lessons
+give me directions to the nearest starbucks
+are there any other coffee shops with the least traffic ?
+please direct me there , thank you .
+thanks car !
+give me a quick route to a grocery store
+yes , what is the address ?
+i want the quickest one available please .
+thank you car !
+what 's the temperature in city
+redwood city , what is the temperature for this week ?
+thank you
+set a reminder for yoga activity at 11 am on the 4th with martha .
+okay , thanks .
+i 'm looking for a place to shop for clothes that is around me. can you find such a place ?
+oh yes that sounds great .
+sure , thanks !
+i need a gas station
+what is the address ?
+thank you !
+where can i go shopping ?
+which is closer ?
+then pick the route through the shortest distance and let 's go there , thank you !
+what time am i scheduled to play tennis at
+is it snowing out
+check to see if it 'll be snowing in boston during the week .
+nope , thanks
+schedule dinner with martha on the 15th of this month at 10am .
+thanks !
+what is the date of our dinner and who is attending ?
+thank you .
+where can i go shopping ?
+i want to go to the ravenwood shopping center , give me the address and then directions with avoiding heavy traffic
+thank you very much car !
+what time is my meeting and what is the agenda , also who is attending ?
+that will do car. thanks .
+set a reminder on the 12th to refill my prescription
+set a reminder for a doctor 's appointment at 2pm on monday the 1st with marie .
+thanks .
+where can i get groceries ?
+what is the address of traders joe 's and give me directions with the fastesr route
+thanks !
+when is my tennis ?
+thank you
+what 's the weather like in new york city
+thanks , i would like to know if it will be windy n new york on tuesday please .
+thank you .
+where is a restaurant
+please tell me the one with the quickest route and the details of the location
+thank you .
+what is the nearby hospital ?
+please pick the quickest route to go there and send me the address on my map
+thanks .
+is it going to be raining this weekend
+alhambra please .
+thanks .
+how 's the weather in new york
+will it be humid on friday ?
+thanks
+set an optometrist appointment for saturday .
+at 3 pm and my sister is joining
+that is all , thanks !
+can you please find me the time , date , and what is planned for the next meeting i have scheduled in my calendar ?
+thank you .
+where 's parking
+can you get me a route that avoids all heavy traffic ?
+yes get me the address .
+thanks so much .
+give me directions to the nearest place to get to eat
+that 's fine. please give me the address and directions via the quickest route .
+show me the route please .
+thank you car !
+directions to the mall
+can you give me a route which is fast please .
+great thank you
+who is going to be at the meeting ?
+both. thanks
+please set reminder for the 8th at 5 pm for yoga. my aunt is coming along
+thank you
+what are some nearby hotels
+let 's try travelers lodge what 's the address and how 's the traffic ?
+thank you for this route
+what 's the forecast for the city this week
+exeter , please. will it be misty anytime during the week ?
+thank you car !
+search for nearest fast food restaurants
+yes , please , send it on my screen and show me the quickest route too , thank you !
+what 's the weather supposed to be like in new york city this week
+will be dry any day this week ?
+thank you
+when is the date and time of my dentist appointment ?
+thank you .
+on sunday in san jose will there be a blizzard ?
+thank you car !
+what time is my next yoga activity and who will be attending ?
+what is the scheduled time for the yoga activity on thursday ?
+okay thanks .
+show me this week 's forecast
+is it going to snow this week in chicago ?
+thanks !
+today in menlo park , will it be misty ?
+thank you car !
+take me to a hospital .
+is it the quickest option ?
+that 's good , please send me its address on the screen , thank you !
+can you kindly schedule a meeting at 4pm , later this week with infrastructure to discuss dress code ?
+thursday .
+no that was everything , thanks .
+set reminder for conference at 9am on wednesday with infrastructure team .
+thank you .
+i 'm in need of a pizza restaurant .
+they sound great ! please pick a quick route to pizza hut , thank you !
+that sounds good. please start directions .
+tell me when my next tennis game is
+great .
+set reminder for lab check up
+the 12th .
+the 12th .
+what time and date is my lab appointment ?
+thank you !
+set a reminder for dinner on august 3rd at 9pm with my brother .
+thanks .
+what is the date and time of my next lab appointment ?
+thank you .
+navigate to the nearest coffee shop
+please send me the address on screen and pick the quickest route for me , thank you !
+thanks !
+where is a hospital in the area ?
+what is the address ?
+that is ok , thanks .
+add meeting in conference room 102 the calendar
+the meeting is at 2pm on august 3rd with sales team to discuss the merger .
+perfect. nothing else for now .
+will it be overcast in san mateo over the next 48 hours ?
+thank you car !
+what day and time is my yoga activity ?
+alright , thanks .
+find me a hotel room for tonight
+which is the quickest ?
+yes , please , and set the navigation there too
+thank you .
+what time is the football game this week
+thank you car .
+find me the fastest route to the nearest rest stop around
+yes please. thanks for the help .
+would you give me the address please ?
+thank you car , let 's go there !
+please schedule a game of tennis with my friend for next week
+when is my doctor 's appointment
+i 'm not feeling well show me the fastest route to the nearest hospital
+thanks .
+where is the nearest gas station ?
+thanks for the information .
+on friday will there be frost in menlo park ?
+thanks .
+what time is my football activity and who is attending ?
+that 's all the info i needed , thanks .
+what time is the football game
+thank you .
+is it going to rain sometime this week
+menlo park .
+thanks !
+please give me the address and directions via the fastest route to a hospital nearby .
+yes , please pick the shortest distance to get there , thank you !
+take me to the closest starbucks
+do you have any local coffee shops ?
+pick the fastest way and let 's go there , thank you !
+thank you .
+what is the weather like in new york this week
+i want to find out if it will rain this week
+thanks .
+what is my friend 's address ?
+how 's the traffic ?
+perfect. let 's go .
+thank you
+i need a rest stop .
+farther than i wish but patience.. please send me the quickest way to get there , thank you !
+please give me a quick route. thank you
+thank you car !
+what is my friend 's house 's address ?
+the one who is the closest .
+what is his address ?
+thanks .
+i have an appointment at 1pm on wednesday with alex
+thanks !
+will it drizzle in oakland in the next week ?
+thank you .
+where is my home ?
+yes , yes , right , i need my morning coffee.. please pick the shortest distance to go back home !
+thank you car !
+find me a nearby coffee shop where i can sit and have some coffee
+that 's great ! please send me its address on screen and pick the quickest way for me
+where is the closest rest stop ?
+do you have for me a route with no traffic to reach it ?
+yes i need to rest .
+thanks !
+schedule a conference with the vice president next week at 4pm
+set a reminder for my yoga class on the 12th
+it is at 3 pm
+what 's the temperature in the city
+san mateo .
+the whole week .
+perfect .
+what time is the optometrist appointment and who is going ?
+the one with martha. thanks .
+thanks !
+will it rain next week
+seattle .
+thanks .
+give me directions to the nearest restaurant
+can you give me the quickest route ?
+thank you car , please send me the address on screen !
+is it snowy in alhambra today ?
+thanks .
+what grocery stores are near ?
+what is the address ?
+let 's go there through the route with the shortest distance please
+thanks !
+take me to the closest whole foods place i can buy groceries
+that will be fine , thank you .
+search hotels near me
+give me the address of a rest stop nearby .
+thanks !
+what 's the temperature going to be like today and tomorrow
+seattle , please .
+thank you !
+i need you to set a reminder for me to take my medicine. set it for 10 am , the 7th with jon , please .
+thank you
+what is my address ?
+please give me the shortest route .
+awesome , thank you .
+find the nearest coffee shop
+ok , please direct me there via a route that avoids all heavy traffic .
+that is fine , just give directions around the traffic .
+how far away is it ?
+yes , please direct me via the route with least traffic .
+thank you car assistant
+next week will it be misty anytime in redwood city ?
+thank you car !
+make an appointment with the dentist
+what day and time is my tennis activity ?
+thanks .
+get me the weather report for this week
+i wan na know if it will rain in fresno
+thank you .
+tell me the time of today 's football game
+give me this week 's high temperature
+for compton please
+thank you .
+when 's my doctor 's appointment
+what time is my tennis match for this saturday
+oh okay well thank you car .
+does the forecast say it will snow
+i would like information for compton .
+thanks .
+find directions to nearest starbucks
+yes .
+yes please .
+no that 's it for now. thanks .
+where can i get pizza ?
+which one is closer to my location ?
+then pick a quick route to get there , thank you !
+that will be all , thanks !
+set a reminder about my swim meet next wednesday at 3 pm
+yes , that is correct. thank you !
+what route can i take home to avoid traffic
+ok , thanks for directions via a route with the least traffic .
+thank you car assistant for the help .
+give me directions to starbucks
+please send me directions for the one closest to me .
+thank you !
+find a shopping mall that i can get to with the least amount of traffic .
+well i guess it will have to do. set the gps please .
+what is the forecast for the city this week
+inglewood .
+thank you !
+is it supposed to snow today
+oakland
+thanks .
+can you set a reminder for a yoga activity at 2pm on the 1st
+my sister is coming along , thanks .
+perfect .
+find me chinese restaurants within 3 miles of my current location
+could you give me the address and directions to the restaurant via a route that avoids all heavy traffic ?
+please set the gps to go there , thank you !
+thank you .
+where can i get a coffee ?
+is there a quick route to reach it ?
+well , it is what it is. let 's navigate there now .
+schedule a doctor appointment with my brother for august 3rd at 10am .
+thanks .
+check the weather forecast
+will it be dry in fresno today ?
+thank you !
+is there a chinese place that has no traffic on the way ?
+yes , please !
+sure , thank you car !
+what is the date of my next optometrist appointment and who will be attending ?
+thanks .
+where is the local gas station ?
+yes please show me the route and avoid heavy traffic .
+what is the address ?
+yes please that sounds great .
+thank you car !
+car i need a gas station to feed you : is there anything around here ?
+please ask siri to replace you and take me to the one with a quick route , thank you !
+where is valero located ?
+then let 's go there , thank you !
+what day is my lab appointment and who is coming with ?
+thank you for your help .
+i have a meeting on the 12th of august at 5:50 please remind me
+thank you
+car i need to go back home , please pick the quickest way with no traffic
+it 's okay , just pick the quickest route to get there , thank you !
+thank you car !
+navigate me to the nearest hotel
+send me the address on screen .
+set gps for quickest available route .
+that 's it , thank you car !
+what 's the weather forecast for the next week
+san francisco
+thank you !
+start listening what will be the weather for the week
+san francisco
+thank you so much car !
+schedule a dinner at 3pm on monday the 1st with alex .
+thanks !
+will the weather be stormy in san mateo over the next 7 days ?
+thank you .
+schedule a football activity with my mother for august 14th at 11am .
+thank you buddy .
+currently are there clear skies in redwood city ?
+thank you .
+will it drizzle in camarillo tomorrow ?
+thank you very much car !
+check forecast for today and tomorrow
+san mateo please , find out the forecast for today and tomorrow .
+thank you !
+schedule a blood test
+it is tomorrow at 1 pm .
+perfect
+when is my next yoga class
+what 's the weather going to be like in the city on thursday
+will it be overcast in atherton on thursday ?
+thanks so much .
+i need to locate a shopping center .
+which is within 3 miles ?
+since town and country is the closest tell me its details
+i repeat : please tell me about town and country : which one is it the quickest way to go there ?
+thank you car !
+what time do i have to take medicine and who is helping ?
+who will be helping me for the one at 3pm ?
+nope , thank you .
+what will the weather be like in the city
+i want to know if there are clear skies in atherton right now
+thank you !
+take me to a chinese restaurant
+thank you !
+what 's the weather like in new york
+okay great. will there be clear skies in the next few days in new york ?
+great thank you
+set doctor 's appointment for next week
+schedule a dentist appointment with alex for monday august 8th at 6pm .
+thank you .
+set a reminder to take my medicine on monday aug 8 at 7 pm with my mother
+thanks
+what time is my next swimming activity and who will be attending ?
+will it be warm in brentwood this week ?
+thank you .
+what 's the temperature
+san mateo
+thank you !
+what is the forecast for new york city
+is there a blizzard now ?
+okay , great. thanks !
+set date for a meeting
+at 11 am on sunday with the executive team to discuss the company picnic
+where does my friend live ?
+mmm ... which one is the quickest to reach ?
+let 's head to jill 's house , then .
+thanks
+is it going to frost in oakland now ?
+thanks .
+please add playing tennis to my schedule
+august 8th at 10 am .
+perfect. thank you
+i 'd like to know where i can get some chinese takeout
+let 's try jing jing .
+what is the address , and is there supposed to be any traffic ?
+yes please give me directions via the fastest route .
+thank you car !
+check weather for new york city
+thanks .
+give me the time for my next doctor 's appointment
+okay perfect .
+give me weather forecast for today
+will it be cloudy in corona ?
+thanks
+set calendar reminder for 1pm this coming tuesday with my aunt .
+thank you !
+tell me the best route to get home with the least amount of traffic
+thank you car , send the address on the screen with the fastest route too .
+great job , thanks .
+find me the best parking spot
+yes please .
+please pick the fastest route , thanks !
+thank you car !
+is it going to snow this week
+boston .
+i 'd like to know where i can get some chinese takeout
+can you show me the quickest route ?
+is there another chinese restaurant available ?
+what is the address ?
+thank you , let 's go there !
+car i 'd like to have a coffee somewhere within 5 miles : show me a quick route too please
+make sure it is the quickest please .
+great , thanks
+set an appointment reminder for the dentist
+will it be hot in inglewood this weekend ?
+thanks .
+find directions to the nearest starbucks
+yes , please give me the address and directions via a route with no traffic .
+thank you for all your help .
+what 's the temperature for today
+well , i need to know the temperature for seattle , today .
+thank you !
+where is the closest place to eat
+set gps for the fastest route with least amount of traffic .
+that 's great , thank you car !
+give me the 7 day weather forecast
+will it drizzle in atherton ?
+okay thanks .
+give me directions to the closest chinese food restaurant
+just send it on my screen and let 's go there through the quickest route , please !
+pick a route with no traffic and let 's go. thank you !
+thanks for the help .
+i need directions to the nearest grocery store
+yes , please , and pick a quick route to reach there too , thank you !
+thank you car !
+check the 7 day outlook to see what the highest temperature in oakland will be
+thanks .
+what is the weather like for tomorrow night
+in in los angeles , will it be humid tomorrow ?
+thank you
+find the nearest restaurant with chinese take-out
+let 's go for jing jing , please send the address on my screen along with the fastest route , thank you !
+thank you .
+how hot is it going to be this week
+for new york this week please .
+thank you !
+schedule a football activity with tom on the 8th at 5pm .
+that is great , thanks .
+are there clear skies in the forecast today
+look in los angeles
+thanks .
+where can i go shopping ?
+give me the name and address of it .
+yes please and thanks .
+what will the temperature be this weekend
+grand rapids .
+thanks .
+get me the address to a local parking garage .
+yes , i want the address of the garage with the shortest route possible
+thank you !
+i need a hospital within 3 miles .
+yes , send me the address please .
+thank you !
+tell me the temperature for this week
+oakland .
+thanks .
+what time is my workout class today
+swimming , and i 'd also like to know the time .
+it 's going to be raining so i have to drive slow
+camarillo , please
+thank you car , do n't worry !
+set a reminder for an optometrist appointment at 9am on the 6th of this month - my brother will be there as well .
+thanks !
+i have a yoga activity. who is going with me ?
+what 's the weekly forecast
+in fresno , will it be raining this week ?
+thanks !
+can you help me find the closest shopping center without heavy traffic ?
+is there traffic ?
+ok that 's fine , set the gps for there .
+tell me what the weather will be like tomorrow
+redwood city
+thank you .
+set reminder for vaccination for the 12th of this month
+at 1 pm
+what are the directions to the nearest chinese restaurant
+thanks .
+i need to schedule a conference room
+what is the forecast for today 's weather
+oakland
+remind me about my meeting with the vice president on monday the 1st
+it 's at 6 pm to discuss the company picnic .
+thank you
+what 's the weather like today and tomorrow
+manhattan , please
+thank you
+give me directions to 5677 southwest 4th street
+sounds good , let 's go there. thanks for the help .
+check weather
+i want to hear the two day forecast for brentwood
+thank you car .
+how is the weather in the city this weekend
+i am asking about downtown chicago , will there be any frost this week ?
+thank you !
+can you schedule a conference at 4pm , the 12th of this month with the vice president ?
+that 's all , thank you !
+directions to nearest barista
+ok , please direct me there via the fastest route .
+thank you car !
+tell me what day and time i scheduled my blood test for this month
+set a reminder for my football activity today at 1pm with jon .
+thanks .
+which days will be cloudy this week
+give me info for san mateo plese
+thank you .
+where do i live ?
+thank you .
+set reminder for dinner
+tomorrow at 7 pm
+there is no location to add
+okay thank you .
+set a reminder to take medicine with jon at 5pm on the tenth
+great , thanks
+schedule dinner with my father at 4 pm on monday the 1st .
+awesome , thanks .
+where can i get gas ?
+yes , what is the address ?
+any without heavy traffic ?
+then let 's go there , thank you car !
+what is my friend 's address ?
+is that the quickest route ?
+sounds great , let 's go .
+what is the highest temperature for the two day forecast in durham ?
+thanks .
+i need the time and parties for taking medicine please .
+that will do just fine , goodbye .

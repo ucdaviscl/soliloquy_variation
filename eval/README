@@ -1,0 +1,8 @@
+This directory contains code for evaluation of 
+automatically generated variety for language models
+using three approaches:
+
+1. Artificial word error rate (Chen et al., 1998)
+2. Perplexity
+3. Vocabulary coverage
+
