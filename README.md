@@ -14,7 +14,7 @@
 ## External data
 
 Models and data are available here (password required):
-https://ucdavis.box.com/v/soliloquy (to-do: add OpenNMT language model)
+https://ucdavis.box.com/v/soliloquy 
 
 ## Lexical variation
 
