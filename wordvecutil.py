@@ -80,6 +80,23 @@ class word_vectors:
             
         return nearest[:numnear]
 
+    # nearvec gets the nearest neighbors of a vector
+    # vec: the target vector
+    # numnear: number of nearest neighbors
+
+    def nearvec(self, vec, numnear):
+
+        # get the distance to all the words we know.
+        dist = self.v.dot(vec)
+
+        # sort by distance
+        nearest = sorted([(dist[i], self.idx2word[i]) for i in range(len(dist))], reverse=True)
+
+        # trim results and return
+        if numnear > len(nearest):
+            numnear = len(nearest)
+            
+        return nearest[:numnear]
 
     # sim returns the cosine similarity between two words.
     # because our vectors are normalized, we can just
