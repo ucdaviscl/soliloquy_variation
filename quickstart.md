@@ -11,6 +11,7 @@ Installing Dependencies
 1. Install [numpy](http://www.numpy.org/)
  ```
     pip3 install numpy
+    pip3 install kenlm
  ```
 
 2. Download [OpenFST](http://www.openfst.org) 1.3.4 (later versions are not compatible)
