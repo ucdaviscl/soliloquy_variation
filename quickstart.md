@@ -4,7 +4,7 @@ Soliloquy Variation Quickstart
 Prerequisites
 ----------
  * Python 3.x
- * gcc, g++ >= 4.1
+ * gcc, g++ 5.x
 
 Installing Dependencies
 ----------
