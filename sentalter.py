@@ -3,7 +3,7 @@
 import sys
 import wordvecutil
 import tokenizer
-import fst
+import pywrapfst as fst
 import math
 import functools
 import operator
@@ -30,7 +30,7 @@ parser.add_argument('-k', '--kenlm', type = str, default = '', help = 'KenLM mod
 class AlterSent:
     def __init__(self, vecfname, lmfname, onmt_dir, model_dir, kenlm_loc, maxtypes=0):
         self.vecs = wordvecutil.word_vectors(vecfname, maxtypes)
-        self.lmfst = fst.read_std(lmfname)
+        self.lmfst = fst.FST.read(lmfname)
         self.maxtypes = maxtypes
         # self.onmt_dir = '/data/OpenNMT'
         # self.onmt_model = '/data/soliloquy_variation/language_model/luamodel_1/model_epoch13_1.16.t7'
@@ -75,15 +75,21 @@ class AlterSent:
 
         # instead, we just make everything NN
         pos = [(w, 'NN') for w in words]
-
-        altfst = fst.Acceptor(syms=self.lmfst.isyms)
         
+	#create new empty FST
+	altfst = fst.Fst()
+	altfst.add_state()	
+
         for idx, (word, tag) in enumerate(pos):
             # add the word to the lattice
-            if word in altfst.isyms:
-                altfst.add_arc(idx, idx+1, word, 0)
+            if word in self.lmfst.input_symbols():
+		word_id = self.lmfst.input_symbols().find(word)
+		arc = fst.Arc(word_id, word_id, 0, self.get_state_id(idx+1, altfst))
+                altfst.add_arc(self.get_state_id(idx, altfst), arc)
             else:
-                altfst.add_arc(idx, idx+1, "<unk>", 0)
+                word_id = self.lmfst.input_symbols().find("<unk>")
+                arc = fst.Arc(word_id, word_id, 0, self.get_state_id(idx+1, altfst))
+                altfst.add_arc(self.get_state_id(idx, altfst), arc)
 
             # add word alternatives to the lattice
             if ( tag.startswith('NN') or \
@@ -101,25 +107,31 @@ class AlterSent:
 
                 # add each neighbor to the lattice
                 for widx, (dist, w) in enumerate(nearlist):
-                    if dist > 0.1 and w in altfst.isyms and w != word:
-                        altfst.add_arc(idx, idx+1, w, (math.log(dist) * -1)/1000)
+                    if dist > 0.1 and w in self.lmfst.input_symbols() and w != word:
+			w_id = self.lmfst.imput_symbols().find(w)
+                        arc = fst.Arc(w_id, w_id, (math.log(dist) * -1)/1000, self.get_state_id(idx+1, altfst))
+                        altfst.add_arc(self.get_state_id(idx, altfst), arc)
 
         # mark the final state in the FST
-        altfst[len(words)].final = True
+        altfst.set_final(len(words))
+        altfst.set_start(0)
+
+	# sort lattice prior to rescoring
+        altfst.arcsort()
 
         # rescore the lattice using the language model
-        scoredfst = self.lmfst.compose(altfst)
+        scoredfst = fst.compose(self.lmfst, altfst)
 
         # get best paths in the rescored lattice
-        bestpaths = scoredfst.shortest_path(numalts)
-        bestpaths.remove_epsilon()
+	bestpaths = fst.shortestpath(scoredfst, nshortest=numalts)
+        bestpaths.rmepsilon()
 
         altstrings = {}
 
         # get the strings and weights from the best paths
-        for i, path in enumerate(bestpaths.paths()):
-            path_string = ' '.join(bestpaths.isyms.find(arc.ilabel) for arc in path)
-            path_weight = functools.reduce(operator.mul, (arc.weight for arc in path))
+        for i, path in enumerate(self.paths(bestpaths)):
+            path_string = ' '.join((bestpaths.input_symbols().find(arc.ilabel)).decode('utf-8') for arc in path)
+            path_weight = functools.reduce(operator.mul, (float(arc.weight) for arc in path))
             if not path_string in altstrings:
                 altstrings[path_string] = path_weight
 
