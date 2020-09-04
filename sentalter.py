@@ -69,7 +69,7 @@ class AlterSent:
                 # add each neighbor to the lattice
                 for widx, (dist, w) in enumerate(nearlist):
                     if dist > 0.1 and w in self.syms and w != word:
-                        altfst.add_transition(idx, idx+1, w, w, (math.log(dist) * -1)/1000)
+                        altfst.add_transition(idx, idx+1, w, w, (math.log(dist) * -1)*10)
 
         # mark the final state in the FST
         altfst.set_final(len(words))
