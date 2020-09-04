@@ -10,6 +10,9 @@ import getopt
 import os
 import argparse
 
+import torch
+from lm_scorer.models.auto import AutoLMScorer as LMScorer
+
 # we can optionally use nltk to tag the text
 # and focus on replacement of specific categories
 #
@@ -27,12 +30,20 @@ class AlterSent:
         self.vecs = wordvecutil.word_vectors(vecfname, maxtypes)
         self.lmfst = fst.load(lmfname)
         self.maxtypes = maxtypes
-        self.sent_rescore =	self.sent_rescore_dummy
+        #self.sent_rescore =	self.sent_rescore_dummy
         with open(vocabfname, 'r', encoding='utf-8') as fp:
             self.syms = set(fp.read().split())
+        self.scorer = LMScorer.from_pretrained("gpt2")
 
     def sent_rescore_dummy(self, sents):
         nscoredsent = [[sents[i][0], sents[i][0], sents[i][1]] for i in range(len(sents))]
+        return nscoredsent
+
+    def sent_rescore(self, sents):
+        nscoredsent = []
+        for score, sent in sents:
+            nscore = self.scorer.sentence_score(sent, log=True)
+            nscoredsent.append((-1 * nscore, sent))
         return nscoredsent
 
     def fst_alter_sent(self, words, numalts=5, cutoff = 0):
@@ -96,7 +107,7 @@ class AlterSent:
             score = altstrings[sent]
             scoredstrings.append((score, sent))
 
-        #scoredstrings = self.sent_rescore(scoredstrings)
+        scoredstrings = self.sent_rescore(scoredstrings)
         scoredstrings.sort()
 
         if len(scoredstrings) > numalts:
@@ -120,7 +131,7 @@ def main():
                 continue
             print()
             words = tokenizer.word_tokenize(line)
-            lines = lv.fst_alter_sent(words,50)
+            lines = lv.fst_alter_sent(words,20)
 
             for i, (score, sent) in enumerate(lines):
                 print("%d: [%.3f] %s" % (i, score, sent)) 
