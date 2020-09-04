@@ -1,6 +1,6 @@
 # Soliloquy Variation
 
-- Generation of lexical and sentence-level variety using word vectors, sequence to sequence models, and transducers.
+- Generation of lexical and sentence-level variety using word vectors, transducers, and neural language modeling (GPT2).
 - Tools for validating generated sentence variations.
 
 ## Dependencies
