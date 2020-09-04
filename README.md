@@ -6,15 +6,15 @@
 ## Dependencies
 
 - Python >= 3.6
-- [PyFST](https://github.com/placebokkk/pyfst) with OpenFST (required for fst sentence variation)
-- [OpenNMT](https://github.com/OpenNMT/OpenNMT) with GPU support (required for neural language model)
-- [KenLM](https://github.com/kpu/kenlm) and its Python module (required for paraphrase testing)
-- [OpenNMT-tf](https://github.com/OpenNMT/OpenNMT-tf) + [Tensorflow](https://www.tensorflow.org/) (required for neural machine paraphrasing)
+- transformers
+- lm-score
 
 ## External data
 
 Models and data are available here (password required):
 https://ucdavis.box.com/v/soliloquy 
+
+Get en_vec.txt, en4M.v100k.fst and en4M.v100k.vocab.
 
 ## Lexical variation
 
@@ -66,58 +66,14 @@ olive
 To get sentence variation using word vectors and a language model, use sentalter.py. It includes a sample driver, invoked as follows:
 
 ```
-python sentalter.py -v en_vec.txt -f wiki_other_en.o4.h10m.fst
+python sentalter.py -v en_vec.txt -f en4M.v100k.fst -s en4M.v100k.vocab
 ```
 
-where en_vec.txt contains word vectors in text format, and wiki_other_en.o4.h10m.fst is a 4-gram language model encoded as an OpenFST finite-state transducer. Input for the sample driver is one sentence per line in stdin, and the output is a scored list of alternative sentences.
+where en_vec.txt contains word vectors in text format, and en4M.v100k.fst is a 4-gram language model encoded as an FST. Input for the sample driver is one sentence per line in stdin, and the output is a scored list of alternative sentences.
 
-#### Generating batch of paraphrases
 
-Use [`get_fst_paraphrases.py`](get_fst_paraphrases.py) to generate paraphrases sentence by sentence from an input file. You can use either an OpenNMT or a KenLM language model to rescore generated sentences.
 
-```
-$ python3 get_fst_paraphrase.py -v [word vectors] -f [fst model] -i [input] -o [output]
-```
-
-### Using sequence to sequence models
-
-The external data directory above contains neural models for text simplification that work with [OpenNMT](http://opennmt.net). The README.txt file in the seq2seq subdirectory in the data URL contains instructions for using the sequence to sequence models.
-
-### Using neural machine paraphrase models
-
-#### Training and testing
-
-1. To train a neural machine paraphrase model, you will need a training set containing paraphrases. We used the 5.3M+ processed and filtered data by [John Wieting](https://www.cs.cmu.edu/~jwieting/). You can use [`split_input.py`](paraphrase/split_input.py) to split the data into corresponding pairs 
-
-2. Generate vocabularies for training and development sets using [`train_model.py`](paraphrase/train_model.py)
-
-   ```
-   $ python3 train_model.py get_vocab -r [source] -t [target]
-   ```
-
-3. Define the parameters of your model in a YAML file, see [`nmp_model.yml`](paraphrase/nmp_model.yml) as an example. You need to specify the save folder and locations of training files, training vocabularies, and development files (if using them).
-
-4. Train the model.
-
-   ```
-   $ python3 train_model.py train -c [configuration file] -s [save folder]
-   ```
-
-5. Evaluate the model.
-
-   ```
-   $ python3 train_model.py evaluate -c [configuration file] -s [save folder]
-   ```
-
-#### Generating paraphrases
-
-Use [`get_nmp_paraphrases.py`](get_nmp_paraphrases.py) to generate paraphrases sentence by sentence from an input file.
-
-```
-$ python3 get_nmp_paraphrase.py -d [model save folder] -c [configuration file] -i [input] -o [output]
-```
-
-## Testing
+## Testing (out of date)
 
 ### Testing the effects of reducing size of training file
 
