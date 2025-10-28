@@ -72,7 +72,7 @@ class word_vectors:
         dist = self.v.dot(self.v[self.word2idx[word]])
 
         # sort by distance
-        nearest = sorted([(dist[i], self.idx2word[i]) for i in range(len(dist))], reverse=True)
+        nearest = sorted([(dist[i].item(), self.idx2word[i]) for i in range(len(dist))], reverse=True)
 
         # trim results and return
         if numnear > len(nearest):
@@ -90,7 +90,7 @@ class word_vectors:
         dist = self.v.dot(vec)
 
         # sort by distance
-        nearest = sorted([(dist[i], self.idx2word[i]) for i in range(len(dist))], reverse=True)
+        nearest = sorted([(dist[i].item(), self.idx2word[i]) for i in range(len(dist))], reverse=True)
 
         # trim results and return
         if numnear > len(nearest):
@@ -107,7 +107,7 @@ class word_vectors:
             return None
         if not w2 in self.word2idx:
             return None
-        return self.v[self.word2idx[w1]].dot(self.v[self.word2idx[w2]])
+        return self.v[self.word2idx[w1]].dot(self.v[self.word2idx[w2]]).item()
 
     # return embeddings for word w
     # third argument is a placeholder for compatibility
